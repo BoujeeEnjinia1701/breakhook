@@ -5,8 +5,8 @@ Run from the repo root:
     python cad/src/model.py --check    constructability checks (overlaps, fits, masses)
 
 One BreakHook set is a steel hook head on a three-section fibreglass pole, a short steel wire
-rope leader shackled to the hook head, a 25 m pull rope, ten hauling toggles and a share of a
-wall rack. A community kit is two sets and one rack.
+rope leader shackled to the hook head, a 25 m pull rope, ten hauling toggles, a fork prop carried
+separately (BHK-DDR-003) and a share of a wall rack. A community kit is two sets and one rack.
 
 Coordinates in mm. The pole axis is the X axis, the hook head at +X, the butt at -X. The hook
 plate lies in the XZ plane, centred on Y = 0; the hook arm points down (-Z), which is how it
@@ -68,6 +68,18 @@ PARAMS = {
     "peg": (700.0, 380.0, 40.0),          # rope peg: height, length, lip height (coil hangs clear of the arms)
     "rack_pitch": 1200.0,                 # upright spacing
     "wall_hole": (11.0, 50.0, 750.0),     # hole diameter and heights for M10 anchors
+    # fork prop (BHK-DDR-003): carried separately, holds the pole at mid-length while the hook is set
+    "prop_outer": (32.0, 3.0, 1000.0),    # lower tube: fibreglass 32 x 3 (toggle stock), length
+    "prop_inner": (25.4, 3.2, 1100.0),    # upper tube: fibreglass 25.4 x 3.2, slides in the lower tube
+    "prop_holes": (150.0, 50.0, 16),      # setting holes in the upper tube: first from its foot, pitch, count
+    "prop_pin_down": 50.0,                # setting pin hole below the top of the lower tube
+    "prop_fork": (12.0, 100.0, 85.0, 60.0, 50.0, 30.0),   # HDPE plate: thick, wide, height above the tube top,
+                                          # tongue depth in the slot, notch width, notch bottom above the tube top
+    "prop_slot": 12.5,                    # slot across the top of the upper tube for the fork tongue
+    "prop_bolts": (8.0, 15.0, 45.0),      # nylon M8 bolts through tube and tongue, depths below the tube top
+    "prop_cap": (36.0, 40.0, 6.0),        # rubber foot cap: OD, length, end thickness
+    "prop_band": (850.0, 50.0),           # red hand band on the lower tube: from the foot, width (hold below)
+    "prop_lean": 10.0,                    # target lean of the prop, top toward the wall (deg)
     # materials (kg/m3)
     "rho_steel": 7850.0,
     "rho_frp": 1900.0,
@@ -95,6 +107,7 @@ def derived(P=PARAMS):
              insertion=tip - (-P["socket"][2]))
     D["length"] = D["overall"][1] - D["overall"][0]
     D["insulated"] = (-P["socket"][2]) - D["band_x"][1]        # socket mouth to the top of the hand band
+    D["prop_x"] = (D["overall"][0] + D["overall"][1]) / 2      # the prop holds the pole at mid-length
     sx, sz = P["eye"][0], P["eye"][1]
     D["shackle_c"] = (sx, 0.0, sz)
     D["bow_z"] = sz - P["shackle"][3]                           # centre of the shackle bow
@@ -350,6 +363,138 @@ def rack_slots(P=PARAMS):
     return [ft + 5 + d / 2 + k * (d + 11.5) for k in range(4)]
 
 
+# ----------------------------------------------------------------------------------- fork prop
+def prop_notch(P=PARAMS, k=0):
+    """Height of the bottom of the fork notch above the ground at setting hole k (0 = longest)."""
+    zpin = P["prop_cap"][2] + P["prop_outer"][2] - P["prop_pin_down"]
+    h0, pitch, n = P["prop_holes"]
+    zb = zpin - (h0 + k * pitch)
+    return zb + P["prop_inner"][2] + P["prop_fork"][5], zb
+
+
+def prop(P=PARAMS, k=0):
+    """Fork prop in its own frame: foot on the ground at the origin, axis +Z, fork plate in the YZ plane
+    (its notch takes a pole running along X). k is the setting hole (0 = longest, 7 = shortest).
+    Returns {name: shape}."""
+    od, w, L = P["prop_outer"]
+    idd, iw, Li = P["prop_inner"]
+    cod, cl, ct = P["prop_cap"]
+    t, fw, fh, tongue, nw, nb = P["prop_fork"]
+    h0, pitch, n = P["prop_holes"]
+    zpin = ct + L - P["prop_pin_down"]
+    _, zb = prop_notch(P, k)
+    ztop = zb + Li
+
+    def tz(o, i, z0, z1):
+        c = Pos(0, 0, (z0 + z1) / 2) * Cylinder(o / 2, z1 - z0)
+        return c - Pos(0, 0, (z0 + z1) / 2) * Cylinder(i / 2, z1 - z0 + 2) if i else c
+
+    out = {}
+    lower = tz(od, od - 2 * w, ct, ct + L)
+    lower = lower - Pos(0, 0, zpin) * Cylinder(P["pin"][1] / 2, od + 4, rotation=(90, 0, 0))
+    out["prop_lower"] = lower
+    upper = tz(idd, idd - 2 * iw, zb, ztop)
+    for i in range(n):
+        upper = upper - Pos(0, 0, zb + h0 + i * pitch) * Cylinder(P["pin"][1] / 2, idd + 4, rotation=(90, 0, 0))
+    upper = upper - Pos(0, 0, ztop - tongue / 2 + 0.5) * Box(P["prop_slot"], idd + 4, tongue + 1)
+    bd, b1, b2 = P["prop_bolts"]
+    for zb_ in (b1, b2):
+        upper = upper - Pos(0, 0, ztop - zb_) * Cylinder(bd / 2 + 0.25, idd + 4, rotation=(0, 90, 0))
+    out["prop_upper"] = upper
+    head = Pos(0, 0, ztop + fh / 2) * Box(t, fw, fh)
+    head = head - Pos(0, 0, ztop + nb + nw / 2 + fh / 2) * Box(t + 2, nw, fh)
+    head = head - Pos(0, 0, ztop + nb + nw / 2) * Cylinder(nw / 2, t + 2, rotation=(0, 90, 0))
+    fork = head + Pos(0, 0, ztop - tongue / 2) * Box(t, idd, tongue)
+    for zb_ in (b1, b2):
+        fork = fork - Pos(0, 0, ztop - zb_) * Cylinder(bd / 2 + 0.25, t + 2, rotation=(0, 90, 0))
+    out["prop_fork"] = fork
+    bolts = []
+    for zb_ in (b1, b2):
+        z = ztop - zb_
+        bolts += [Pos(0, 0, z) * Cylinder(bd / 2, idd + 12, rotation=(0, 90, 0)),
+                  Pos(-(idd / 2 + 2.5), 0, z) * Cylinder(6.5, 5, rotation=(0, 90, 0)),
+                  Pos(idd / 2 + 3.5, 0, z) * Cylinder(6.5, 7, rotation=(0, 90, 0))]
+    out["prop_bolts"] = _fuse(bolts)
+    pd = P["pin"][0]
+    out["prop_pin"] = (Pos(0, 0, zpin) * Cylinder(pd / 2, od + 16, rotation=(90, 0, 0))
+                       + Pos(0, -(od / 2 + 2.5), zpin) * Cylinder(9, 5, rotation=(90, 0, 0))
+                       + Pos(0, od / 2 + 5, zpin) * Torus(7, 1.2))
+    cap = tz(cod, None, 0.0, cl) - Pos(0, 0, ct + cl / 2) * Cylinder(od / 2, cl)
+    out["prop_cap"] = cap
+    b0, bw = P["prop_band"]
+    out["prop_band"] = tz(od + 0.6, od, b0, b0 + bw)
+    return out
+
+
+PROP_ORDER = ["prop_cap", "prop_lower", "prop_band", "prop_upper", "prop_fork", "prop_bolts", "prop_pin"]
+
+
+def prop_setting(P=PARAMS, contact_z=None):
+    """Setting hole k and lean (deg) that put the fork under a pole whose underside is contact_z above the
+    ground at the prop, as near the target lean as the holes allow (lean between 0 and 20 deg)."""
+    best = None
+    for k in range(P["prop_holes"][2]):
+        h, _ = prop_notch(P, k)
+        if h < contact_z:
+            continue
+        lean = math.degrees(math.acos(contact_z / h))
+        if lean <= 20.0 and (best is None or abs(lean - P["prop_lean"]) < abs(best[1] - P["prop_lean"])):
+            best = (k, lean)
+    return best
+
+
+def prop_in_use(P=PARAMS, beam=None):
+    """The prop under the pole at mid-length in the deployed pose, in world coordinates (as posed()).
+    The fork notch is brought to 0.5 mm under the middle pole section. Returns ({name: shape}, info)."""
+    D = derived(P)
+    th_d, (tx, tz) = deploy_pose(P) if beam is None else deploy_pose(P, beam)
+    th = math.radians(th_d)
+    r = P["pole"][0] / 2
+    xp = D["prop_x"]
+    cx, cz = _rot_xz((xp, -r / math.cos(th)), th)
+    cx, cz = cx + tx, cz + tz                                   # pole underside, straight below its axis
+    k, lean = prop_setting(P, cz)
+    sec = posed(build_components(P)["section_2"], P) if beam is None else None
+    h, _ = prop_notch(P, k)
+    parts = prop(P, k)
+    fork0, cap0 = parts["prop_fork"], parts["prop_cap"]
+    lr = math.radians(lean)
+
+    def place(lr, shift):
+        ux, uz = math.sin(lr), math.cos(lr)
+        return Pos(cx - h * ux + shift * ux, 0, cz - h * uz + shift * uz) * Rot(0, math.degrees(lr), 0)
+
+    shift = 0.0
+    for _ in range(4):                     # lean so the foot cap sits on the ground, then close the fork
+        lo, hi = -20.0, 20.0               # bisect for the shift where the fork first touches the pole
+        for _ in range(14):
+            mid = (lo + hi) / 2
+            if (place(lr, mid) * fork0 & sec).volume > 0.01:
+                hi = mid
+            else:
+                lo = mid
+        shift = lo - 0.5                   # leave about 0.5 mm under the pole
+        gap = (place(lr, shift) * fork0).distance_to(sec)
+        low = (place(lr, shift) * cap0).bounding_box().min.Z
+        if abs(low) < 0.3:
+            break
+        lr -= low / (h * math.sin(lr))
+    lean = math.degrees(lr)
+    loc = place(lr, shift)
+    ux = math.sin(lr)
+    foot_x = cx - h * ux + shift * ux
+    out = {kname: loc * sh for kname, sh in parts.items()}
+    return out, dict(k=k, lean=lean, notch=h, foot=(foot_x, low), contact=(cx, cz), gap=gap)
+
+
+def prop_stowed(P=PARAMS, x_foot=-680.0, k=6):
+    """One prop lying on an upper rack arm (rack coordinates), fork plate standing up, fork toward +X."""
+    ft = P["flat"][1]
+    zr = P["arm_z"][1] + ft + P["prop_outer"][0] / 2
+    parts = prop(P, k)
+    return {n: Pos(x_foot, 0, zr) * (Rot(0, 90, 0) * (Rot(0, 0, 90) * s)) for n, s in parts.items()}
+
+
 # ----------------------------------------------------------------------------------- components
 def build_components(P=PARAMS):
     """Every component of one set, in place on the assembled hook (rack and coil at their own spots)."""
@@ -391,7 +536,8 @@ def head_weldment(P=PARAMS):
 def stowed(P=PARAMS):
     """The community kit on its rack (rack coordinates: wall at y = 0, floor of the rack at z = 0).
     Lower arms: sections 1 and 2 of both sets (sleeves at alternate ends). Upper arms: section 3 of each
-    set with its hook head, shackle and leader left on. Rope coils hang on the pegs.
+    set with its hook head, shackle and leader left on, and the two fork props between them, set short.
+    Rope coils hang on the pegs.
     Returns {name: shape}."""
     D = derived(P)
     ft = P["flat"][1]
@@ -419,6 +565,8 @@ def stowed(P=PARAMS):
     for k, y in enumerate((ys[0], ys[2])):
         sh = _fuse([C["section_3"]] + [C[h] for h in head])
         out[f"upper_{k + 1}"] = Pos(0, y, z_hi) * (Pos(x_mid(a, b), 0, 0) * sh)
+    for k, y in enumerate((ys[1], ys[3])):
+        out[f"prop_{k + 1}"] = Compound([Pos(0, y, 0) * s for s in prop_stowed(P).values()])
     pz, pl, ph = P["peg"]
     R, r = P["coil"]
     for i, x in enumerate((-P["rack_pitch"] / 2, P["rack_pitch"] / 2)):
@@ -544,6 +692,17 @@ def masses(P=PARAMS):
     return m
 
 
+def prop_mass(P=PARAMS):
+    """Fork prop mass (kg), carried separately from the pole and hook head."""
+    Q = prop(P, 0)
+    frp = P["rho_frp"] * 1e-9
+    m = {"lower tube": Q["prop_lower"].volume * frp, "upper tube": Q["prop_upper"].volume * frp,
+         "fork plate (HDPE)": Q["prop_fork"].volume * 960e-9, "bolts and pin (nylon)":
+         (Q["prop_bolts"].volume + Q["prop_pin"].volume) * P["rho_nylon"] * 1e-9,
+         "foot cap and band": Q["prop_cap"].volume * 1200e-9 + 0.01}
+    return m
+
+
 def check(P=PARAMS):
     D = derived(P)
     C = build_components(P)
@@ -591,6 +750,71 @@ def check(P=PARAMS):
         print(f"  {k}: {v:.3f} kg")
     print(f"pole and hook head: {pole_hook:.2f} kg; with shackle and leader {sum(m.values()):.2f} kg")
     print(f"overall length {D['length']:.0f} mm; insulated length {D['insulated']:.0f} mm; sections {D['secs']}")
+    bad += check_prop(P)
+    return bad
+
+
+def _overlaps(S, allowed=()):
+    allowed = {frozenset(p) for p in allowed}
+    keys = list(S)
+    bad = []
+    for i in range(len(keys)):
+        for j in range(i + 1, len(keys)):
+            a, b = keys[i], keys[j]
+            if frozenset((a, b)) in allowed:
+                continue
+            ba, bb = S[a].bounding_box(), S[b].bounding_box()
+            if (ba.min.X > bb.max.X or bb.min.X > ba.max.X or ba.min.Y > bb.max.Y or bb.min.Y > ba.max.Y
+                    or ba.min.Z > bb.max.Z or bb.min.Z > ba.max.Z):
+                continue
+            v = (S[a] & S[b]).volume
+            if v > 1.0:
+                bad.append((a, b, round(v, 1)))
+    return bad
+
+
+def check_prop(P=PARAMS):
+    """Fork prop (BHK-DDR-003): its own parts, the fits, its place under the pole and on the rack."""
+    bad = []
+    for k in (0, P["prop_holes"][2] - 1):
+        b = _overlaps(prop(P, k), [("prop_band", "prop_lower"), ("prop_cap", "prop_lower")])
+        print(f"prop setting {k}: overlaps over 1 mm3:", b or "none")
+        bad += b
+    od, w, _ = P["prop_outer"]
+    idd = P["prop_inner"][0]
+    print(f"prop upper tube in lower tube: radial clearance {(od - 2 * w - idd) / 2:.2f} mm; fork tongue in slot "
+          f"{(P['prop_slot'] - P['prop_fork'][0]) / 2:.2f} mm each side; notch {P['prop_fork'][4]:.0f} for a "
+          f"{P['pole'][0]} pole")
+    Q = prop(P, 0)
+    for a, b in (("prop_fork", "prop_upper"), ("prop_cap", "prop_lower"), ("prop_upper", "prop_lower")):
+        print(f"{a} to {b}: gap {Q[a].distance_to(Q[b]):.2f} mm")
+    lo, hi = prop_notch(P, P["prop_holes"][2] - 1)[0], prop_notch(P, 0)[0]
+    print(f"prop notch height range {lo:.0f} to {hi:.0f} mm in {P['prop_holes'][1]:.0f} mm steps; "
+          f"shortest length {hi - (hi - lo) + P['prop_fork'][2] - P['prop_fork'][5]:.0f} mm")
+    U, info = prop_in_use(P)
+    C = {k: posed(v, P) for k, v in build_components(P).items()}
+    allc = dict(C)
+    allc.update(U)
+    b = [x for x in _overlaps(allc, [("prop_band", "prop_lower"), ("prop_cap", "prop_lower")])
+         if x[0].startswith("prop") or x[1].startswith("prop")]
+    print(f"prop in use: setting {info['k']}, lean {info['lean']:.1f} deg, fork to pole gap {info['gap']:.2f} mm, "
+          f"foot {-info['foot'][0] / 1000:.2f} m from the wall plate face; overlaps with the set:", b or "none")
+    bad += b
+    ft = U["prop_cap"].bounding_box().min.Z
+    print(f"prop foot cap lowest point {ft:.1f} mm (ground at 0)")
+    S = stowed(P)
+    b = [x for x in _overlaps(S) if x[0].startswith("prop") or x[1].startswith("prop")]
+    print("props on the rack: overlaps over 1 mm3:", b or "none")
+    bad += b
+    for nm, q in S.items():
+        if nm.startswith("prop"):
+            bb = q.bounding_box()
+            print(f"  {nm}: x {bb.min.X:.0f} to {bb.max.X:.0f}, lowest {bb.min.Z:.1f} (arm top "
+                  f"{P['arm_z'][1] + P['flat'][1]:.0f})")
+    pm = prop_mass(P)
+    for k, v in pm.items():
+        print(f"  prop {k}: {v:.3f} kg")
+    print(f"fork prop: {sum(pm.values()):.2f} kg, carried separately")
     return bad
 
 
@@ -608,8 +832,12 @@ def export(P=PARAMS):
     export_step(C["sleeve_1"], str(step / "joint-sleeve.step"))
     export_step(toggle((0, 0, 0), P), str(step / "hauling-toggle.step"))
     export_step(Compound(rack_upright(P, 0.0)), str(step / "rack-upright.step"))
+    Q = prop(P, 0)
+    export_step(Compound([Q[k] for k in PROP_ORDER]), str(step / "fork-prop.step"))
+    export_step(Q["prop_fork"], str(step / "fork-prop-plate.step"))
     export_stl(head_weldment(P), str(stl / "hook-head.stl"), tolerance=0.2, angular_tolerance=0.3)
     export_stl(toggle((0, 0, 0), P), str(stl / "hauling-toggle.stl"), tolerance=0.2, angular_tolerance=0.3)
+    export_stl(Q["prop_fork"], str(stl / "fork-prop-plate.stl"), tolerance=0.2, angular_tolerance=0.3)
     print("exported STEP and STL")
 
 

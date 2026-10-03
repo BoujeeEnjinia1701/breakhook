@@ -3,7 +3,7 @@ doc_id: BHK-CAL-001
 title: BreakHook sizing calculations
 project: BreakHook
 doc_type: Calculation
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -13,11 +13,15 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: First issue for TRL 3 on the constructable design (pull needed, hauling geometry, hook plate, welds, rope system, pole placement, joints, insulation, deployment time, mass and cost)
+- version: "0.2"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: Fork prop at mid-length added under Amish's decision 6A (BHK-DDR-003); droop, reach, prop load, buckling, prop mass, insulated path to the prop holder [F13 to F24, H3]; kit cost re-run
 ---
 
 # BreakHook sizing calculations
 
-The constructable design meets its strength, mass, insulation and reach targets on paper: the hook plate keeps a factor of 2.3 or more on yield at the 6 kN proof load, the pole and hook head weigh 7.82 kg against 8 kg, and haulers stand 10.8 m from the wall. Two results need care: the hook droops about 0.66 m when the pole is held out at 25°, and deployment comes out at exactly the 3 minute target. Times and pulls are estimates that a TRL 4 trial on a purpose-built test frame must confirm.
+The constructable design meets its strength, mass, insulation and reach targets on paper: the hook plate keeps a factor of 2.3 or more on yield at the 6 kN proof load, the pole and hook head weigh 7.82 kg against 8 kg, and haulers stand 10.8 m from the wall. With the fork prop at mid-length (BHK-DDR-003) the hook droops about 0.27 m instead of 0.66 m, and nobody lifts the pole: the prop carries 100 N into the ground. Two results still need care: the prop holder stands about 2.9 m from the wall while the hook is set, nearer than the 4 m of R1, and deployment comes out at exactly the 3 minute target. Times and pulls are estimates that a TRL 4 trial on a purpose-built test frame must confirm.
 
 > **Safety:** This note sizes a tool that pulls down a structure with a rope. The numbers assume the dwelling has been checked empty, nobody is inside the fall zone, the pole has been withdrawn before the haul and there are no overhead lines within 3 m. Nothing in this note has been built or tested. Proof loads are applied to each hook head before issue, never to a person or an occupied structure.
 
@@ -42,6 +46,7 @@ Table 1. Assumptions
 | 9 | Store distance | Kit stored within 100 m of the dwellings it covers; walking 1 m/s with the kit | Community fire plan rule |
 | 10 | Nylon 66 shear strength | 40 MPa | Conservative for a moulded pin |
 | 11 | Epoxy allowable lap shear | 5 MPa | One third of a typical 15 MPa structural epoxy |
+| 12 | Fork prop | Holds the pole at mid-length, leaning about 13° with its top toward the wall and its foot on the ground; the rear hand holds the butt 100 mm from its end; both are simple supports | BHK-DDR-003 |
 
 ## A. How hard to pull (R2, R7, R13)
 
@@ -78,7 +83,19 @@ Factors at the 3 kN working pull: pull rope 7.5 [E1], wire rope leader 6.0 [E2],
 
 Setting the hook at 3.0 m from 4.0 m away puts the pole at 25.4° [F1]. The front hand is 1.27 m from the butt [F2], below the hand band at 1.55 m [F3]. The pole, hook head, leader and the rope hanging from it weigh 84 N [F4]. Held with the hands 1.17 m apart, the rear hand pushes down with 168 N [F5] and the front hand lifts 252 N [F6], so the pole is handled by a team of two: one lifts, one holds the butt down. The tube stress at the front hand is 50.6 MPa, a factor of 4.0 on its flexural strength [F7].
 
-The tube is flexible: with E = 20 GPa the hook droops about 658 mm below the straight line [F8] (second moment of area 8.91 cm⁴ [F9]). The team aims about 0.7 m high and lowers the hook onto the beam. This is the weakest result in this note; a stiffer tube would add mass against R5.
+The tube is flexible: with E = 20 GPa the hook droops about 658 mm below the straight line [F8] (second moment of area 8.91 cm⁴ [F9]). Held out by hand, the team would have to aim about 0.7 m high; a stiffer tube would add mass against R5. The fork prop below takes most of this droop out.
+
+### With the fork prop (BHK-DDR-003)
+
+Amish's decision 6A adds a light fork prop that holds the pole at its mid-length, 2,944 mm from the butt [F13]. In the R1 placement the pole's underside is 1.79 m above the ground there [F14]; the prop is set at its third hole (fork notch 1.84 m above the foot) and leans 12.8° with its top toward the wall [F15]. The pole then rests on two supports, the prop and the rear hand at the butt, with the hook end overhanging the prop.
+
+- **Droop:** the hook droops 274 mm below the line through the two supports [F16], against 658 mm when the pole is held out by hand [F8]. The team aims about 0.3 m high and lowers the hook onto the beam.
+- **Effort:** the prop carries 100 N into the ground through its foot [F17]; the rear hand pushes down with only 24 N [F18], against 252 N lifted and 168 N pushed down by hand [F5, F6]. The prop holder only steadies the prop.
+- **Reach:** the hook is set at 3.0 m. The rear hand is 5.06 m from the wall [F20]. The prop foot is 2.89 m from the wall [F19], and the prop holder stands at or just behind it, so the nearest person is about 2.9 m from the wall while the hook is set, against 4.0 m for the front hand in R1.
+- **Strength:** the prop's upper tube alone buckles at 822 N over the whole prop length, 8 times the prop load [F21].
+- **Mass:** the prop weighs 1.08 kg [F22] and is carried separately, so the pole and hook head stay at 7.82 kg (R5). Closed, the prop is 1.24 m long (R8).
+
+Moving the prop toward the butt until its foot is 4.0 m from the wall puts it 1,577 mm from the butt [F23]; the hook then droops 720 mm [F24], more than by hand, because nearly all the pole overhangs the prop. The prop only helps near mid-length.
 
 Mass: the pole and hook head weigh 7.82 kg [F10], 0.18 kg under the 8 kg limit [F11]. The longest piece to carry is a section with its sleeve, 1.95 m [F12].
 
@@ -88,7 +105,7 @@ The friction ring is wrapped until a 50 N pull frees the pole from the hook head
 
 ## H. Insulation (R4, R14)
 
-There is no metal between the mouth of the socket and the top of the hand band: 3.67 m of foam-filled fibreglass with nylon pins [H1], against 3.0 m required [H2]. Whether that length insulates depends on the bought tube's certificate (R4). The hook, leader and shackles are metal and a wet rope conducts.
+There is no metal between the mouth of the socket and the top of the hand band: 3.67 m of foam-filled fibreglass with nylon pins [H1], against 3.0 m required [H2]. The prop holder's hand is 3.27 m of fibreglass, HDPE and nylon from the socket mouth: along the pole to the fork, then down the prop to the top of its red hand band [H3]. Whether that length insulates depends on the bought tube's certificate (R4). The hook, leader and shackles are metal and a wet rope conducts.
 
 > **Safety:** The insulated length is a second line of defence only. The rule on the check card stands: never raise the pole within 3 m of any overhead line, whatever the pole is made of.
 
@@ -106,7 +123,7 @@ Table 3. Deployment estimate (pole team of two)
 | Withdraw the pole, step out of the fall zone | 10 |
 | **Total** | **180 (3.0 min) [I1]** |
 
-The other two of the four lay out the rope and run the check card at the same time. From hook set to frame down: crew on the toggles and the caller's zone check 30 s, slack taken up 10 s, pull 30 s, about 1.2 minutes [I2].
+The other two of the four lay out the rope and run the check card at the same time. The pole team is the rear handler and the prop holder: the prop is stored at the hole marked for the community's usual wall height and goes under the pole in place of the front-hand lift, so the estimate is unchanged; a timed drill at TRL 4 must confirm it. From hook set to frame down: crew on the toggles and the caller's zone check 30 s, slack taken up 10 s, pull 30 s, about 1.2 minutes [I2].
 
 ## L. Results against every requirement
 
@@ -114,20 +131,20 @@ Table 4. Requirements against the calculations (requirement text in BHK-REQ-001)
 
 | ID | Target | Result | Status |
 | --- | --- | --- | --- |
-| R1 | Hook at 3 m from 4 m away | 25.4° pole; two-person team, 252 N lift; hook droops 0.66 m [F1 to F8] | Met on paper; at risk from droop, confirm in a reach trial |
+| R1 | Hook at 3 m from 4 m away | 25.4° pole on the fork prop: droop 0.27 m (0.66 m by hand), rear hand 24 N; rear hand 5.06 m and prop holder 2.9 m from the wall [F13 to F20] | Hook placement met on paper with much less droop; the prop holder stands 1.1 m nearer than the 4 m front-hand distance |
 | R2 | 3 kN working, 6 kN proof | Plate factor 2.3 on yield at proof; rope 7.5, leader 6.0, shackle 3.3 [C, E] | Met |
 | R3 | Haulers at 1.5 x height or more | 10.8 m against 4.5 m [B1] | Met |
 | R4 | Non-conductive handled length, test voltage set | Foam-filled tube with a maker's ASTM F711 certificate [H1] | Met by specification; confirm the certificate when bought |
-| R5 | 8 kg or less | 7.82 kg [F10] | Met, 0.18 kg margin |
+| R5 | 8 kg or less | 7.82 kg [F10]; the 1.08 kg prop is carried separately [F22] | Met, 0.18 kg margin |
 | R6 | 3 min or less with four people | 3.0 min [I1] | Met on estimate, no margin; timed drill at TRL 4 |
 | R7 | Under 2 min to bring down a test frame | About 1.2 min [I2] | Estimate only; timed trial at TRL 4 |
-| R8 | No piece over 2 m | 1.95 m [F12] | Met |
+| R8 | No piece over 2 m | 1.95 m [F12]; prop 1.24 m closed | Met |
 | R9 | 12 months outdoor storage | Material choices only | Not verifiable at TRL 3 |
-| R10 | Kit cost against the USD 2,000 target | USD 1,098 (bom/bom.csv) | USD 902 under the value-engineering target |
+| R10 | Kit cost against the USD 2,000 target | USD 1,170 with two fork props (bom/bom.csv) | USD 830 under the value-engineering target |
 | R11 | Beams up to 100 x 120 mm | 117 mm deep, 128 to 150 mm wide [C8 to C10] | Met |
 | R12 | Pole frees from the head before the haul | 50 N release [G1] | Met by design; set by trial |
 | R13 | 300 N or less per hauler | 300 N with ten haulers [A5] | Met at the limit |
-| R14 | 3.0 m or more insulated length | 3.67 m [H1] | Met |
+| R14 | 3.0 m or more insulated length | 3.67 m [H1]; 3.27 m to the prop holder's hand [H3] | Met |
 
 ## Checks against the TRL 1 figures
 

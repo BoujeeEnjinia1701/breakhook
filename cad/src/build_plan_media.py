@@ -5,6 +5,7 @@ With no argument it draws everything. Every picture is drawn from cad/src/model.
 and the model never disagree:
     docs/05-build-plan/overview.png        every component pulled apart, numbered in build order
     cad/drawings/BHK-DWG-101 to 106        making sketches for the made components
+    cad/drawings/BHK-DWG-107               making sketch for the fork prop (BHK-DDR-003)
     docs/05-build-plan/joint-NN.png        close-ups of the joints that need explaining
     docs/05-build-plan/step-NN.png         one picture per assembly step
 Uses .kit/build_views.py. BUILD PLAN ILLUSTRATION, PLAN NOT YET BUILT.
@@ -17,9 +18,9 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
 import build_views as bv  # noqa: E402
 from build_views import Part  # noqa: E402
-from build123d import Box, Pos, Rot  # noqa: E402
+from build123d import Box, Compound, Pos, Rot  # noqa: E402
 from model import (PARAMS as P, derived, build_components, toggle, toggle_on_rope, rack_upright, stowed,  # noqa: E402
-                   posed, test_frame, rope_coil, _fuse, _tube_x)
+                   posed, test_frame, rope_coil, _fuse, _tube_x, prop, prop_in_use, prop_notch)
 
 OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
@@ -29,7 +30,9 @@ C = build_components(P)
 COL = {"plate": "#D9A400", "socket": "#B7791F", "welds": "#374151", "section": "#E07B24", "sleeve": "#9A3412",
        "pin": "#E5E7EB", "ring": "#1F2937", "band": "#DC2626", "cap": "#111827", "shackle": "#64748B",
        "leader": "#475569", "rope": "#1D4ED8", "toggle": "#0F766E", "cord": "#7C3AED", "rack": "#57534E",
-       "frame": "#B08D5B"}
+       "frame": "#B08D5B", "prop": "#0E7490", "fork": "#F8FAFC", "propband": "#DC2626"}
+Q = prop(P, 0)                                   # fork prop at its longest setting, foot at the origin, axis +Z
+QL = {k: Rot(0, 90, 0) * (Rot(0, 0, 90) * v) for k, v in Q.items()}      # the same lying along X, fork at +X
 
 
 def win(shape, x0, x1, y=400.0, z=600.0):
@@ -67,6 +70,12 @@ def overview():
         ("Wire rope leader", C["leader"], COL["leader"], (0, 650, 0)),
         ("Pull rope", rope_coil((-900, 1300, -350), P), COL["rope"], (0, 0, 0)),
         ("Hauling toggles and prusik cords (10)", tog, COL["toggle"], (0, 0, 0)),
+        ("Fork prop: lower tube, foot cap and band", Pos(-2700, -1500, -300) * (QL["prop_lower"] + QL["prop_cap"]
+                                                                          + QL["prop_band"]), COL["prop"], (0, 0, 0)),
+        ("Fork prop: upper tube", Pos(-2700, -1500, -300) * QL["prop_upper"], "#22A3C3", (700, 0, 0)),
+        ("Fork plate and two nylon bolts", Pos(-2700, -1500, -300) * (QL["prop_fork"] + QL["prop_bolts"]),
+         "#94A3B8", (1050, 0, 0)),
+        ("Prop setting pin", Pos(-2700, -1500, -300) * QL["prop_pin"], COL["pin"], (0, 0, 200)),
         ("Rack uprights (2, one shown)", rack, COL["rack"], (0, 0, 0)),
     ]
     parts = [part(n, s, c, e) for n, s, c, e in items]
@@ -169,6 +178,34 @@ def sheets():
             "Each arm holds four poles 56 apart; sleeves go at alternate ends",
             "Check: arms level and square to the wall; a 10 kg load leaves no movement",
         ], inset_view=(20, -50))
+    prop_sheet()
+
+
+def prop_sheet():
+    common = dict(project="BreakHook", date=DATE)
+    U, info = prop_in_use(P)
+    sec = posed(C["section_2"], P)
+    pole_w = sec & Pos(info["contact"][0], 0, info["contact"][1]) * Box(900, 300, 600)
+    prop_all = Compound([Q[k] for k in ("prop_cap", "prop_lower", "prop_band", "prop_upper", "prop_fork", "prop_bolts",
+                                     "prop_pin")])
+    lo, hi = prop_notch(P, P["prop_holes"][2] - 1)[0], prop_notch(P, 0)[0]
+    bv.component_sheet(part("Fork prop", Compound([U[k] for k in U]), COL["prop"]),
+                       [part("", pole_w, "")], **common, dwg_no="BHK-DWG-107",
+                       title="Fork prop (make 1 per set): making sketch",
+                       material="Fibreglass tube 32 x 3 and 25.4 x 3.2; 12 HDPE fork plate; nylon bolts and pin", notes=[
+            "Lower tube: 32 x 3 fibreglass, 1000 long; one 10.5 hole across, 50 below its top",
+            "Upper tube: 25.4 x 3.2 fibreglass, 1100 long; it slides inside the lower tube",
+            "  (0.3 clearance each side); sixteen 10.5 holes, 50 apart, the first 150 up",
+            "  from its bottom end; all holes in one line, square to the tube",
+            "Slot across the top of the upper tube: 12.5 wide, 60 deep (as the socket slots)",
+            "Fork plate: 12 HDPE, 100 wide; notch 50 wide, round bottom R25, 30 above the",
+            "  tube top; tongue 25.4 wide, 60 long into the slot; round all edges",
+            "Two nylon M8 bolts through tube and tongue, 15 and 45 below the tube top",
+            "Rubber foot cap; red band 850 to 900 up from the foot; hold below the band",
+            f"Notch height {lo / 1000:.2f} to {hi / 1000:.2f} m in 50 steps; 1.24 m long when closed",
+            "Seal cut ends and hole bores with epoxy; no metal anywhere in the prop",
+            "Check: upper tube slides freely; the pin goes through at every hole",
+        ], view_shape=prop_all, inset_view=(14, -70))
 
 
 # ----------------------------------------------------------------- joints
@@ -230,6 +267,31 @@ def joints():
              OUT / "joint-08.png", "Joint 8: poles on the rack arms",
              "Four poles per arm, 56 apart, held by the lips; the coil hangs on the peg clear of the arms",
              elev=22, azim=-35)
+    prop_joints()
+
+
+def prop_joints():
+    kmin = P["prop_holes"][2] - 1
+    Q7 = prop(P, kmin)                              # shortest setting: fork and setting pin close together
+    top = prop_notch(P, kmin)[1] + P["prop_inner"][2]
+    w = Pos(0, 0, top - 60) * Box(300, 300, 400)
+    bv.joint([part("Upper tube (cut open)", Q7["prop_upper"] & w, "#22A3C3"),
+              part("Fork plate, 12 HDPE", Q7["prop_fork"], "#94A3B8"),
+              part("Two nylon M8 bolts", Q7["prop_bolts"], COL["pin"]),
+              part("Lower tube", Q7["prop_lower"] & w, COL["prop"]),
+              part("Setting pin and clip", Q7["prop_pin"], "#F59E0B")],
+             OUT / "joint-09.png", "Joint 9: fork plate and setting pin on the prop",
+             "Tongue 60 deep in the slot, two nylon bolts; the pin sets the height in 50 mm steps", cut="+Y",
+             elev=18, azim=-30)
+    U, info = prop_in_use(P)
+    cx, cz = info["contact"]
+    w = Pos(cx, 0, cz - 40) * Box(600, 400, 420)
+    bv.joint([part("Middle pole section", posed(C["section_2"], P) & w, COL["section"]),
+              part("Fork plate", U["prop_fork"] & w, "#94A3B8"),
+              part("Prop upper tube", U["prop_upper"] & w, "#22A3C3"),
+              part("Nylon bolts", U["prop_bolts"] & w, COL["pin"])],
+             OUT / "joint-10.png", "Joint 10: the pole resting in the fork (in use)",
+             "The pole lies loose in the notch at mid-length; the fork lifts, it never clamps", elev=12, azim=-60)
 
 
 # ----------------------------------------------------------------- steps
@@ -281,16 +343,23 @@ def steps():
     st(12, [part("Pull rope", T["rope"], "")],
        [part("Prusik cord", T["prusik"], COL["cord"], (0, 0, -150)), part("Toggle", T["toggle"], COL["toggle"], (0, 0, -150))],
        "toggles onto the rope", "Ten toggles, 1 m apart, the first 11 m from the hook head")
+    st(13, [part("Lower tube, foot cap and band", QL["prop_lower"] + QL["prop_cap"] + QL["prop_band"], "")],
+       [part("Upper tube with fork plate and bolts", QL["prop_upper"] + QL["prop_fork"] + QL["prop_bolts"], "#22A3C3",
+             (700, 0, 0)), part("Setting pin", QL["prop_pin"], "#F59E0B", (0, 0, 220))],
+       "assemble the fork prop", "Fork bolted into the upper tube; upper tube into the lower; pin at the set hole",
+       elev=22, azim=-50)
     S = stowed(P)
-    st(13, [], [part("Rack upright", S["upright_1"], COL["rack"], (0, 300, 0)),
+    st(14, [], [part("Rack upright", S["upright_1"], COL["rack"], (0, 300, 0)),
                 part("Rack upright", S["upright_2"], COL["rack"], (0, 300, 0))],
        "rack uprights onto the wall", "1200 apart, plumb, two M10 anchors each", elev=22, azim=-35)
     kit = [S[k] for k in S if k.startswith(("lower", "upper"))]
     coils = [S[k] for k in S if k.startswith("coil")]
-    st(14, [part("Rack", S["upright_1"] + S["upright_2"], "")],
+    props = [S[k] for k in S if k.startswith("prop")]
+    st(15, [part("Rack", S["upright_1"] + S["upright_2"], "")],
        [part("Pole sections and hook heads, two sets", _fuse(kit), COL["section"], (0, 500, 150)),
+        part("Fork props, closed short", Compound(props), COL["prop"], (0, 500, 300)),
         part("Rope coils on the pegs", _fuse(coils), COL["rope"], (0, 500, 150))],
-       "stow the kit, lock and seal", "Cable through every section and both hook eyes; padlock and a numbered seal",
+       "stow the kit, lock and seal", "Cable through every section, both props and both hook eyes; padlock and seal",
        elev=22, azim=-35, label_done=False)
 
 

@@ -3,7 +3,7 @@ doc_id: BHK-BLD-001
 title: BreakHook prototype build plan
 project: BreakHook
 doc_type: Build plan
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: First build plan; design made constructable (BHK-DDR-002)
+- version: "0.2"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: Fork prop added (BHK-DDR-003); new section 3.8, Figures 14 to 16, Step 13; rack and stowing steps renumbered 14 and 15
 ---
 
 # BreakHook prototype build plan
@@ -23,9 +27,9 @@ revisions:
 
 ![Figure 1. Every component, pulled apart and numbered in build order](05-build-plan/overview.png)
 
-*Figure 1. One set and one rack upright, pulled apart and numbered in build order.*
+*Figure 1. One set, its fork prop and one rack upright, pulled apart and numbered in build order.*
 
-The prototype is one BreakHook set and its wall rack: a yellow steel hook head on a 5.9 m orange fibreglass pole in three sections, a short steel wire rope leader, a 25 m blue pull rope with ten hauling toggles, and two steel rack uprights. A community kit is two sets on one rack. Six components are made: the hook plate and the socket tube (welded together into the hook head), the pole sections, the joint sleeves, the toggles and the rack uprights. Everything else is bought: shackles, wire rope leader, pull rope, nylon pins, cord, tape, caps, the lock and the seals. The work is cutting and welding steel plate and tube, cutting, drilling and gluing fibreglass tube, and tying knots. The parts for a community kit cost about USD 1,098 from the bill of materials.
+The prototype is one BreakHook set and its wall rack: a yellow steel hook head on a 5.9 m orange fibreglass pole in three sections, a short steel wire rope leader, a 25 m blue pull rope with ten hauling toggles, a light fork prop that holds the pole at mid-length while the hook is set, and two steel rack uprights. A community kit is two sets on one rack. Seven components are made: the hook plate and the socket tube (welded together into the hook head), the pole sections, the joint sleeves, the toggles, the fork prop and the rack uprights. Everything else is bought: shackles, wire rope leader, pull rope, nylon pins, cord, tape, caps, the lock and the seals. The work is cutting and welding steel plate and tube, cutting, drilling and gluing fibreglass tube, and tying knots. The parts for a community kit cost about USD 1,170 from the bill of materials.
 
 > **Safety:** This is a pulling tool used near fire, around people and possibly near electrical wiring. In the workshop the hazards are hot work (cutting and welding steel), fibreglass dust, and, at first load, a rope system under 6 kN. Weld only with fire precautions and eye protection; cut and drill fibreglass outdoors or with extraction, in a dust mask and gloves. Never stand in line with a loaded rope or leader. No part of this plan involves pulling down a real dwelling; first trials use a purpose-built test frame, outside this plan.
 
@@ -45,6 +49,7 @@ The concept showed what BreakHook does; several parts could not be made or joine
 | Hook plate size | 40 mm shank and arm in ordinary steel | 36 mm shank and 48 mm arm in S355 steel | The arm needed more strength on deep beams; the slimmer shank keeps the weight under 8 kg |
 | Hauling handles | Handles or toggles | Fibreglass toggles on prusik cord loops (Figure 10) | They slide along the rope when slack and grip when pulled |
 | Rack | A rack and a seal | Two welded flat-bar uprights with lipped arms and a rope peg (Figure 11) | Every piece rests on an arm without touching its neighbour |
+| Holding the pole up | Two people holding the pole out by hand | A fork prop under the pole at mid-length, carried separately (Figures 14 to 16; decision record BHK-DDR-003) | The hand-held pole sagged about 0.66 m at the hook; on the prop it sags about 0.27 m and nobody has to lift it |
 
 ## 3. Making the components
 
@@ -198,7 +203,8 @@ Make and check each component before the assembly step that needs it. Sizes are 
 - **Pull ropes (two):** 12 mm polyester double braid, breaking strength 25 kN or more, 25 m with a spliced eye; whip the tail.
 - **Nylon pins (four):** 10 mm nylon 66 clevis pins with nylon hitch clips; tie each to its section with a cord lanyard.
 - **Friction ring tape, red tape and clear sleeve, butt caps, structural epoxy, cord, paint:** as the bill of materials.
-- **Lock cable and padlock, numbered seals, fall zone tape and stakes, check cards, rigger gloves:** used in Step 14 and in training.
+- **Nylon M8 bolts, prop setting pins and prop foot caps:** for the fork prop (section 3.8).
+- **Lock cable and padlock, numbered seals, fall zone tape and stakes, check cards, rigger gloves:** used in Step 15 and in training.
 
 ![Figure 12. Joint 4: shackle in the rope eye](05-build-plan/joint-04.png)
 
@@ -207,6 +213,37 @@ Make and check each component before the assembly step that needs it. Sizes are 
 ![Figure 13. Joint 5: leader to pull rope](05-build-plan/joint-05.png)
 
 *Figure 13. Second shackle through the far leader eye; the rope's spliced eye on its bow.*
+
+### 3.8 Fork prop (make 1 per set)
+
+![Figure 14. Making sketch of the fork prop](../cad/drawings/BHK-DWG-107.png)
+
+*Figure 14. Fork prop making sketch (BHK-DWG-107).*
+
+**What it is and what it is made from.** A light, adjustable prop with a fork at its top. While the hook is set, the pole lies in the fork at its mid-length, so nobody has to hold the pole out at arm's length. It is carried separately from the pole. It has a lower tube of fibreglass 32 x 3 (the same stock as the toggles), an upper tube of fibreglass 25.4 x 3.2 that slides inside it, a fork plate cut from 12 mm HDPE plastic, two nylon M8 bolts, a nylon setting pin and a rubber foot cap. There is no metal in it.
+
+**How to make it.**
+
+1. Cut the lower tube 1000 long and the upper tube 1100 long. Seal the cut ends with epoxy.
+2. Lower tube: drill one 10.5 hole straight across, 50 below its top.
+3. Upper tube: mark a straight line along it and drill sixteen 10.5 holes on that line, 50 apart, the first 150 from its bottom end, all square to the tube. Seal the hole bores with epoxy.
+4. Upper tube: cut a slot straight across its top, 12.5 wide and 60 deep, as for the socket slots (section 3.2), at right angles to the line of holes.
+5. Fork plate: print the profile from the making sketch at full size and cut it from 12 mm HDPE with a jigsaw or coping saw. It is 100 wide; the notch at the top is 50 wide with a round bottom of 25 radius, 30 above the top of the tube; the tongue at the bottom is 25.4 wide and 60 long. Round every edge with a file or scraper.
+6. Push the tongue into the slot until the plate sits on the tube, drill two 8.5 holes through tube and tongue, 15 and 45 below the top of the tube, and fit the nylon bolts and nuts hand tight.
+7. Push the rubber cap on the bottom of the lower tube. Wrap red tape from 850 to 900 up from the foot and shrink a clear sleeve over it, as on the pole.
+8. Slide the upper tube into the lower tube and fit the setting pin through the lower tube's hole and one of the upper tube's holes. Tie the pin to the lower tube with its lanyard.
+
+**How it fits the parts next to it.** The upper tube slides in the lower tube with about 0.3 clearance all round; the pin sets the height of the fork in 50 steps, from 1.19 m to 1.94 m above the ground (Figure 15). The pole lies loose in the notch with about 2.75 clearance at each side; the fork lifts the pole and never clamps it (Figure 16). In use the prop stands under the middle pole section, about 2.95 m from the butt, leaning about 13° with its top toward the wall. Its holder holds it below the red band.
+
+![Figure 15. Joint 9: fork plate and setting pin on the prop](05-build-plan/joint-09.png)
+
+*Figure 15. Cut open: the fork's tongue in the slot with two nylon bolts; the setting pin through both tubes.*
+
+![Figure 16. Joint 10: the pole resting in the fork](05-build-plan/joint-10.png)
+
+*Figure 16. In use: the middle pole section lies in the notch.*
+
+**Check before moving on.** The upper tube slides in and out by hand at every hole and the pin goes through each of them. The fork plate does not rock in the slot. Closed to its shortest, the prop is about 1.24 m long. Mark the hole for the community's usual wall height with tape.
 
 ## 4. Putting it together
 
@@ -284,17 +321,23 @@ Second shackle through the far eye of the leader, the rope's spliced eye on its 
 
 Ten toggles, 1 m apart, the first 11 m from the hook head.
 
-### Step 13: rack uprights onto the wall
+### Step 13: assemble the fork prop
 
 ![Step 13](05-build-plan/step-13.png)
 
-1200 apart, plumb, with two M10 anchors each into masonry or coach screws into a timber post.
+Fork plate bolted into the top of the upper tube; upper tube into the lower tube; setting pin through the marked hole, clip on (section 3.8).
 
-### Step 14: stow the kit, lock and seal
+### Step 14: rack uprights onto the wall
 
 ![Step 14](05-build-plan/step-14.png)
 
-Butt and middle sections on the lower arms, sleeves at alternate ends; top sections with their hook heads, shackles and leaders on the upper arms; ropes coiled on the pegs with the toggles. Run the lock cable through every section and both hook eyes, padlock it and fit a numbered seal. **Hold point:** safety stop S4.
+1200 apart, plumb, with two M10 anchors each into masonry or coach screws into a timber post.
+
+### Step 15: stow the kit, lock and seal
+
+![Step 15](05-build-plan/step-15.png)
+
+Butt and middle sections on the lower arms, sleeves at alternate ends; top sections with their hook heads, shackles and leaders on the upper arms; the two fork props closed short on the upper arms between the top sections, forks beyond the arm; ropes coiled on the pegs with the toggles. Run the lock cable through every section, both props and both hook eyes, padlock it and fit a numbered seal. **Hold point:** safety stop S4.
 
 ## 5. First checks
 
@@ -310,7 +353,8 @@ These are the checks a TRL 4 test report would record; this plan only lists them
 | Release | R12 | Spring balance on the pole while the hook head is held | Releases at about 50 N |
 | Insulated length and certificate | R4, R14 | Measure from the socket mouth to the top of the band; read the tube certificate | 3.0 m or more; certificate to ASTM F711 present |
 | Beam fit | R11 | Hang the hook on 75 x 50 and 100 x 120 timber offcuts | Shank rests on top, arm behind, no forcing |
-| Reach | R1 | Pole team sets the hook on a 3 m high timber rail from 4 m away | Hook set in three tries or fewer; droop measured |
+| Reach | R1 | Pole team sets the hook on a 3 m high timber rail, the pole on the fork prop at mid-length and the rear hand at the butt | Hook set in three tries or fewer; droop measured (about 0.27 m expected); distance of each person from the rail measured |
+| Prop | R1, R8 | Set the prop at each marked hole under the pole; close it | Pin goes through at every hole; the prop stands steady at its lean; closed length 1.3 m or less |
 | Toggle grip | R13 | 30 kg hung on a toggle on the rope | No slip |
 | Deployment drill | R6 | Four people, kit 100 m from the rail, stopwatch | Hook set and pole withdrawn in 3 min or less |
 
@@ -322,11 +366,11 @@ Stop at each point. Carry on only when everything listed is true.
 - **S2. Before the first proof load.** The rig and the load path are rated above 6 kN; the shackle pins are moused; nobody stands in line with the rope, leader or hook, or within 3 m of the load path; a heavy blanket or mat is laid over the leader to catch it if it parts.
 - **S3. After the proof load.** Any bend, crack or shifted ferrule takes that part out of service for good; nothing is straightened and reused.
 - **S4. Before the kit is issued to a community.** Proof load passed and tagged for both sets; tube certificate on file; check cards, gloves and fall zone tape in the kit; the community's fire plan, agreed with the fire service, names the keyholders and the caller; training has been given.
-- **S5. Before any trial pull (outside this plan).** Only on a purpose-built test frame, never an occupied or lived-in structure; the frame checked empty; no overhead lines within 3 m; fall zone taped; pole withdrawn and the pole team out of the zone; haulers at least 10 m back, in gloves, on the caller's word.
+- **S5. Before any trial pull (outside this plan).** Only on a purpose-built test frame, never an occupied or lived-in structure; the frame checked empty; no overhead lines within 3 m; fall zone taped; pole and fork prop withdrawn and the pole team out of the zone; haulers at least 10 m back, in gloves, on the caller's word.
 
 ## 7. Tools, skills and workspace
 
-**Tools.** Angle grinder with cutting and flap discs, or access to a plasma cutter; bench drill with drills to 16 mm; centre punch and letter stamps; MIG or stick welder; hacksaw; fine-tooth saw for fibreglass; files; coarse abrasive paper and a dowel; tape measure, steel rule, square and calipers; 5 kg spring balance; bathroom or hanging scale; paint brushes; heat gun for the clear sleeve.
+**Tools.** Angle grinder with cutting and flap discs, or access to a plasma cutter; bench drill with drills to 16 mm; centre punch and letter stamps; MIG or stick welder; hacksaw; fine-tooth saw for fibreglass; jigsaw or coping saw for the HDPE fork plate; files; coarse abrasive paper and a dowel; tape measure, steel rule, square and calipers; 5 kg spring balance; bathroom or hanging scale; paint brushes; heat gun for the clear sleeve.
 
 **Skills.** A competent welder for the hook head and rack; basic workshop skills for the rest; knot tying (double fisherman's knot, prusik hitch), which a rigging shop or climbing club can teach. The proof load is done by a rigging shop or on CalRig with someone trained to use it.
 
@@ -337,9 +381,9 @@ Stop at each point. Carry on only when everything listed is true.
 ## 8. Where the numbers come from
 
 - Model and constructability checks: `cad/src/model.py` (`python cad/src/model.py --check`); STEP and STL exports in `cad/step/` and `cad/stl/`.
-- Pictures: `cad/src/build_plan_media.py`, using `.kit/build_views.py`; written to `docs/05-build-plan/` and `cad/drawings/BHK-DWG-101` to `BHK-DWG-106`.
-- General arrangement: `cad/drawings/BHK-DWG-001.pdf`, Rev P1.
-- Calculations: `docs/04-calcs/01-sizing.md` (BHK-CAL-001 v0.1) and `docs/04-calcs/sizing.py`.
+- Pictures: `cad/src/build_plan_media.py`, using `.kit/build_views.py`; written to `docs/05-build-plan/` and `cad/drawings/BHK-DWG-101` to `BHK-DWG-107`.
+- General arrangement: `cad/drawings/BHK-DWG-001.pdf`, Rev P2.
+- Calculations: `docs/04-calcs/01-sizing.md` (BHK-CAL-001 v0.2) and `docs/04-calcs/sizing.py`.
 - Bill of materials: `bom/bom.csv`.
-- Decisions: `docs/decisions/0001-trl2-review-decisions.md` (BHK-DDR-001) and `docs/decisions/0002-design-for-construction.md` (BHK-DDR-002).
-- Requirements: `docs/03-requirements.md` (BHK-REQ-001 v0.2).
+- Decisions: `docs/decisions/0001-trl2-review-decisions.md` (BHK-DDR-001) `docs/decisions/0002-design-for-construction.md` (BHK-DDR-002) and `docs/decisions/0003-fork-prop.md` (BHK-DDR-003).
+- Requirements: `docs/03-requirements.md` (BHK-REQ-001 v0.3).

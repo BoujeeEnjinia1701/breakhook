@@ -3,7 +3,7 @@ doc_id: BHK-DEC-001
 title: BreakHook design decisions register
 project: BreakHook
 doc_type: Design decisions register
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: Register opened at TRL 3; all decisions made under Amish's 2026-10-03 pre-approval
+- version: "0.2"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: Fork prop at mid-length decided by Amish (6A, BHK-DDR-003); new open decision on the prop holder's distance from the wall; value engineering re-costed
 ---
 
 # BreakHook design decisions register
@@ -23,7 +27,9 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-None. All decisions were made under Amish's 2026-10-03 pre-approval.
+| # | To be decided | State | Options | Recommendation | Affects in the build | Source |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Where the prop holder stands while the hook is set | The fork prop works only near the pole's mid-length; there its holder stands about 2.9 m from the wall for the 25 s of placement, 1.1 m nearer than R1's 4 m front-hand distance. The rear handler is 5.06 m away. | (a) Accept 2.9 m for placement only, restating R1's distance as applying to the pole hands, with the prop holder withdrawing with the pole before the haul; (b) keep 4 m for everyone and move the prop back (droop 0.72 m, no better than by hand); (c) keep 4 m and set the prop, then let it stand alone in the fork while its holder steps back (untested) | (a), checked in the TRL 4 reach trial and drill: the firebreak is opened two dwellings ahead of the fire (BHK-DDR-001, decision 10), so the dwelling being hooked is not yet burning, and the prop only helps at mid-length | None to the parts; the check card and drill wording | [BHK-DDR-003](decisions/0003-fork-prop.md); BHK-CAL-001 [F19], [F24] |
 
 ## To confirm when parts are bought
 
@@ -31,7 +37,8 @@ None. All decisions were made under Amish's 2026-10-03 pre-approval.
 | --- | --- | --- | --- |
 | 1 | The pole tube carries the maker's dielectric test certificate to ASTM F711 for live-line tool tube, and its stated test voltage | R4 is met only by this certificate | BHK-DDR-001, decision 1 |
 | 2 | Actual outside diameter of the 44.5 mm tube and bore of the 50.8 x 3.2 sleeve tube; how much sanding gives a 0.2 mm slip fit | Nominal sizes give no clearance | BHK-DDR-002 |
-| 3 | Stiffness of the tube from the maker's data (E along the tube); measured hook droop at 25° | The 0.66 m droop estimate uses E = 20 GPa; R1 is at risk | BHK-CAL-001 [F8] |
+| 3 | Stiffness of the tube from the maker's data (E along the tube); measured hook droop at 25° on the fork prop | The 0.27 m droop estimate with the prop (0.66 m by hand) uses E = 20 GPa | BHK-CAL-001 [F8], [F16] |
+| 9 | Outside diameter of the 25.4 x 3.2 prop tube and bore of the 32 x 3 tube; the upper tube slides freely | 0.3 mm radial clearance on nominal sizes | BHK-DDR-003 |
 | 4 | Bore of the 50.8 x 2.0 steel socket tube (46.8 mm nominal) | Sets the 1.15 mm clearance and the friction ring wrap | BHK-DDR-002 |
 | 5 | Turns of rubber tape that give a 50 N release | R12 | BHK-CAL-001 [G1] |
 | 6 | Shackle jaw width at least 12 mm and pin no larger than 12 mm | Fits the 10 mm plate and the 13 mm hole | bom/bom.csv line 11 |
@@ -40,7 +47,7 @@ None. All decisions were made under Amish's 2026-10-03 pre-approval.
 
 ## Value engineering
 
-Value-engineering target: USD 2,000 (a hypothetical control target, not a limit). Estimated cost of the constructable design: USD 1,098 (USD 902 under the target). Main cost drivers and savings worth trying:
+Value-engineering target: USD 2,000 (a hypothetical control target, not a limit). Estimated cost of the constructable design: USD 1,170 (USD 830 under the target), including two fork props at USD 36 each. Main cost drivers and savings worth trying:
 
 - Certified, foam-filled pole tube: USD 270 for six sections (25 % of the kit). A bulk order across several communities, or a local pultruder, is the main saving; uncertified tube is not an option (R4).
 - Pull ropes: USD 140. Polyester double braid could give way to a cheaper three-strand polyester of the same breaking strength, with a check on hand grip and prusik hold.
@@ -67,3 +74,4 @@ Value-engineering target: USD 2,000 (a hypothetical control target, not a limit)
 | 2026-10-03 | Requirements updated, R11 to R14 added | As above | BHK-DDR-001, decision 14 |
 | 2026-10-03 | `budget_usd` stays at USD 2,000 as the value-engineering target | Amish Chadha: "I also accept any cost overruns or variations from the assumed scope cost." | BHK-DDR-001, decision 15 |
 | 2026-10-03 | Design for construction: plate hook in slotted socket, slip-fit pole with friction ring, bonded sleeves and nylon pins, rope tab with shackle and leader, S355 plate with 36 mm shank and 48 mm arm, prusik toggles, welded wall rack | Amish Chadha, pre-approval as above | [BHK-DDR-002](decisions/0002-design-for-construction.md) |
+| 2026-10-03 | R1: add a light fork prop that supports the pole at mid-length, carried separately so the pole and hook head stay under 8 kg (decision 6A) | Amish Chadha: "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A" | [BHK-DDR-003](decisions/0003-fork-prop.md) |

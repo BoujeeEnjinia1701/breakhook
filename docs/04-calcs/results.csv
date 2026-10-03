@@ -39,6 +39,18 @@ F9,Pole tube second moment of area,8.906,cm^4,
 F10,Pole and hook head mass (R5),7.821,kg,target 8 kg or less
 F11,Margin on R5,0.1792,kg,
 F12,Longest piece to carry (R8),1.95,m,a section with its bonded sleeve
+F13,"Prop position along the pole, from the butt",2944,mm,mid-length of the 5.9 m set
+F14,Height of the pole underside at the prop,1.794,m,
+F15,Prop setting hole and lean,12.83,deg,"hole 3 of 16, fork notch 1.836 m above the foot"
+F16,"Droop of the hook at the reach point, pole on the prop",274,mm,against 658 mm hand-held [F8]
+F17,Load on the prop,100.3,N,into the ground through the foot; the prop holder only steadies it
+F18,Rear hand at the butt,-24.28,N,negative: pushes down
+F19,Prop foot from the wall (prop holder stands here or behind),2.894,m,R1 front hand: 4.0 m
+F20,Butt (rear hand) from the wall,5.056,m,
+F21,"Prop buckling load (upper tube over the whole length, pinned ends)",821.8,N,factor 8 on the prop load
+F22,"Fork prop mass, carried separately",1.08,kg,not part of R5
+F23,"Alternative: prop placed so its foot is 4.0 m from the wall, position from the butt",1578,mm,
+F24,Alternative: droop with that prop position,720.2,mm,prop load 193 N; prop 1.24 m long at 13 deg
 G1,Set force to pull the pole out of the hook head,50,N,friction ring wrapped until this is reached (set by trial); 4 x the hook head weight along the pole
 G2,Hook head weight along the pole at 25 deg,10.93,N,the ring must hold more than this
 G3,Ring contact pressure that gives G1,0.01788,MPa,friction 0.5 (assumed)
@@ -47,5 +59,6 @@ G5,Pin capacity against the pull-out force,125.7,,pins never carry the rope pull
 G6,Bonded sleeve capacity,104.9,kN,"150 mm overlap, 5 MPa allowable epoxy shear"
 H1,"Insulated length, socket mouth to hand band",3674,mm,no metal in this length; pins are nylon
 H2,Required by R14,3000,mm,
+H3,"Insulated path to the prop holder's hand: pole from the socket mouth to the fork, then the prop down to its hand band",3266,mm,"fibreglass, HDPE and nylon only"
 I1,"Store to hook set, pole team of two (R6)",3,min,the other two lay out the rope and run the check card in parallel
 I2,Hook set to frame down (R7),1.167,min,estimate; set by a timed trial at TRL 4

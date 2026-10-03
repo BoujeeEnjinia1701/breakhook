@@ -3,7 +3,7 @@ doc_id: BHK-PRC-001
 title: BreakHook design precis
 project: BreakHook
 doc_type: Precis
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: TRL 2 and TRL 3 on the constructable design; decisions under Amish's 2026-10-03 pre-approval (BHK-DDR-001, BHK-DDR-002); numbers from BHK-CAL-001
+- version: "0.3"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: Fork prop at mid-length added under Amish's decision 6A (BHK-DDR-003); droop and cost updated from BHK-CAL-001 v0.2
 ---
 
 # BreakHook design precis
@@ -25,7 +29,7 @@ Lets residents pull a shack down from a safe distance to open a firebreak before
 
 ## Summary
 
-BreakHook is a steel hook on a 5.9 m fibreglass pole, with a wire rope leader and a 25 m pull rope. A team of two sets the hook over a wall plate or rafter from 4 m away, withdraws the pole and steps clear; a crew of about ten on hauling toggles, at least 10 m back, pulls the dwelling down away from the fire's path. A community kit holds two sets in a locked, sealed wall rack with check cards, fall zone tape and gloves. The kit's estimated cost is USD 1,098 against a USD 2,000 value-engineering target, and the pole and hook head weigh 7.82 kg.
+BreakHook is a steel hook on a 5.9 m fibreglass pole, with a wire rope leader and a 25 m pull rope. A team of two sets the hook over a wall plate or rafter, the pole resting on a light fork prop at mid-length, then withdraws the pole and prop and steps clear; a crew of about ten on hauling toggles, at least 10 m back, pulls the dwelling down away from the fire's path. A community kit holds two sets in a locked, sealed wall rack with check cards, fall zone tape and gloves. The kit's estimated cost is USD 1,170 against a USD 2,000 value-engineering target, and the pole and hook head weigh 7.82 kg.
 
 ![Figure 1. BreakHook set over the wall plate of a test frame, with a 1.75 m person for scale](../media/hero.png)
 
@@ -91,10 +95,10 @@ Table 2. Key figures (BHK-CAL-001)
 | Rope, leader and shackle factors at the working pull | 7.5, 6.0, 3.3 |
 | Pole and hook head mass | 7.82 kg |
 | Lift and hold-down forces for the pole team | 252 N and 168 N |
-| Hook droop at 25° | about 0.66 m |
+| Hook droop at 25° | about 0.27 m on the fork prop (0.66 m held by hand) |
 | Insulated length | 3.67 m |
 | Deployment within 100 m of the store | 3.0 min (estimate) |
-| Value-engineering target | USD 2,000. Estimated cost of the constructable design: USD 1,098 (USD 902 under the target) |
+| Value-engineering target | USD 2,000. Estimated cost of the constructable design: USD 1,170 (USD 830 under the target) |
 
 ## Patent design-arounds
 

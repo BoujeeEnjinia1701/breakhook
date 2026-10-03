@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "cad" / "src"))
-from model import PARAMS as P, derived, masses  # noqa: E402
+from model import PARAMS as P, derived, masses, prop_mass, prop_setting, prop_notch  # noqa: E402
 
 g = 9.81
 R = []          # (ref, quantity, value, unit, note)
@@ -177,6 +177,93 @@ out("F10", "Pole and hook head mass (R5)", m_set, "kg", "target 8 kg or less")
 out("F11", "Margin on R5", 8.0 - m_set, "kg")
 out("F12", "Longest piece to carry (R8)", (P["sec_len"] + P["sleeve"][2] / 2) / 1000, "m", "a section with its bonded sleeve")
 
+# ------------------------------------------------------------------ F (cont.). fork prop at mid-length (R1, BHK-DDR-003)
+# The pole rests in the fork of a prop at its mid-length; one person holds the butt down, one steadies the
+# prop. The pole is a beam on two supports (rear hand and prop) with the hook end overhanging the prop.
+x_prop = D["prop_x"]
+
+
+def beam_on_supports(xa, xb, ref):
+    """Deflection (mm, down positive) at ref of the pole resting on supports at xa (rear hand) and xb
+    (prop), measured from the straight line through the supports; returns (droop, R_a, R_b) in N."""
+    Fz = [(x, m * g * c) for x, m in loads]
+    Rb = sum(f * (x - xa) for x, f in Fz) / (xb - xa)
+    Ra = sum(f for _, f in Fz) - Rb
+    xs = [D["butt"] + i * (P["spike"][0] - D["butt"]) / 4000 for i in range(4001)]
+
+    def Mx(x):                       # hogging moment, N mm (positive bends the tip down)
+        m_ = sum(f * (xi - x) for xi, f in Fz if xi > x)
+        if x < xb:
+            m_ -= Rb * (xb - x)
+        if x < xa:
+            m_ -= Ra * (xa - x)
+        return m_
+    k = [-Mx(x) / (E * I) for x in xs]           # v'' with v up positive
+    v1, v = [0.0], [0.0]
+    for i in range(1, len(xs)):
+        h_ = xs[i] - xs[i - 1]
+        v1.append(v1[-1] + 0.5 * (k[i] + k[i - 1]) * h_)
+        v.append(v[-1] + 0.5 * (v1[i] + v1[i - 1]) * h_)
+
+    def at(xq):
+        j = min(range(len(xs)), key=lambda i: abs(xs[i] - xq))
+        return v[j]
+    va, vb = at(xa), at(xb)
+    line = va + (vb - va) * (ref - xa) / (xb - xa)
+    return line - at(ref), Ra, Rb
+
+
+def prop_geometry(xp):
+    """Prop under the pole at xp (pole axis coordinate) in the R1 placement geometry."""
+    z_axis = H_hand + (xp - x_front) / 1000 * math.sin(theta)
+    z_under = z_axis - od / 2000 / math.cos(theta)
+    x_wall = (reach_x - xp) / 1000 * math.cos(theta)
+    st = prop_setting(P, z_under * 1000)
+    if st is None:                   # outside this prop's range: a prop of any length at the target lean
+        lr = math.radians(P["prop_lean"])
+        return dict(z=z_under, wall=x_wall, k=None, lean=P["prop_lean"], h=z_under / math.cos(lr),
+                    foot=x_wall + z_under * math.tan(lr))
+    k_, lean = st
+    h_ = prop_notch(P, k_)[0] / 1000
+    rc = P["prop_cap"][0] / 2000
+    lr = math.radians(lean)
+    for _ in range(20):
+        lr = math.acos((z_under - rc * math.sin(lr)) / h_)
+    return dict(z=z_under, wall=x_wall, k=k_, lean=math.degrees(lr), h=h_, foot=x_wall + h_ * math.sin(lr))
+
+
+x_rear_p = D["butt"] + 100
+G1p = prop_geometry(x_prop)
+out("F13", "Prop position along the pole, from the butt", x_prop - D["butt"], "mm", "mid-length of the 5.9 m set")
+out("F14", "Height of the pole underside at the prop", G1p["z"], "m")
+out("F15", "Prop setting hole and lean", G1p["lean"], "deg", f"hole {G1p['k'] + 1} of {P['prop_holes'][2]}, fork notch {G1p['h']:.3f} m above the foot")
+droop_p, Ra_p, Rb_p = beam_on_supports(x_rear_p, x_prop, reach_x)
+out("F16", "Droop of the hook at the reach point, pole on the prop", droop_p, "mm", f"against {defl:.0f} mm hand-held [F8]")
+out("F17", "Load on the prop", Rb_p, "N", "into the ground through the foot; the prop holder only steadies it")
+out("F18", "Rear hand at the butt", Ra_p, "N", "negative: pushes down")
+out("F19", "Prop foot from the wall (prop holder stands here or behind)", G1p["foot"], "m", "R1 front hand: 4.0 m")
+out("F20", "Butt (rear hand) from the wall", (reach_x - x_rear_p) / 1000 * math.cos(theta), "m")
+idp, iwp, Lip = P["prop_inner"]
+I_p = math.pi / 64 * (idp ** 4 - (idp - 2 * iwp) ** 4)
+L_p = G1p["h"] * 1000
+out("F21", "Prop buckling load (upper tube over the whole length, pinned ends)", math.pi ** 2 * E * I_p / L_p ** 2, "N",
+    f"factor {math.pi ** 2 * E * I_p / L_p ** 2 / Rb_p:.0f} on the prop load")
+m_prop = sum(prop_mass(P).values())
+out("F22", "Fork prop mass, carried separately", m_prop, "kg", "not part of R5")
+# for comparison: the prop moved toward the butt until its foot is 4.0 m from the wall
+lo_, hi_ = D["butt"] + 300, x_prop
+for _ in range(40):
+    mid_ = (lo_ + hi_) / 2
+    if prop_geometry(mid_)["foot"] > 4.0:
+        lo_ = mid_
+    else:
+        hi_ = mid_
+G4 = prop_geometry(lo_)
+d4, _, R4b = beam_on_supports(x_rear_p, lo_, reach_x)
+out("F23", "Alternative: prop placed so its foot is 4.0 m from the wall, position from the butt", lo_ - D["butt"], "mm")
+out("F24", "Alternative: droop with that prop position", d4, "mm",
+    f"prop load {R4b:.0f} N; prop {G4['h']:.2f} m long at {G4['lean']:.0f} deg")
+
 # ------------------------------------------------------------------ G. pole joints and release (R12)
 mu = 0.5
 A_ring = math.pi * od * P["ring"][1]
@@ -195,6 +282,10 @@ out("G6", "Bonded sleeve capacity", bond / 1000, "kN", "150 mm overlap, 5 MPa al
 # ------------------------------------------------------------------ H. insulation (R4, R14)
 out("H1", "Insulated length, socket mouth to hand band", D["insulated"], "mm", "no metal in this length; pins are nylon")
 out("H2", "Required by R14", 3000.0, "mm")
+band_top = P["prop_band"][0] + P["prop_band"][1]
+out("H3", "Insulated path to the prop holder's hand: pole from the socket mouth to the fork, then the prop "
+    "down to its hand band", (-P["socket"][2] - x_prop) + (G1p["h"] * 1000 - band_top), "mm",
+    "fibreglass, HDPE and nylon only")
 
 # ------------------------------------------------------------------ I. deployment and pull time (R6, R7)
 steps6 = [("Cut seal, unlock, lift out one set", 20), ("Carry to the fire edge, 100 m at 1 m/s", 100),

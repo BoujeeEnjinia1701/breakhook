@@ -3,7 +3,7 @@
 Run from the repo root:  python cad/src/concept_media.py
 Writes, with .kit/concept.py:
     media/hero.png                 the hook set over the wall plate of a test dwelling frame, pole butt on
-                                   the ground, 1.75 m person for scale (grey parts are context)
+                                   the ground, fork prop at mid-length, 1.75 m person (grey parts are context)
     media/exploded.png             one set pulled apart, numbers match bom/bom.csv
     media/concept-blueprint.*      concept sheet BHK-DWG-010 from the straight assembly
     media/flow.png                 pull force path at the working pull (BHK-CAL-001 estimates)
@@ -20,11 +20,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
 import numpy as np  # noqa: E402
-from build123d import Pos, Rot  # noqa: E402
+from build123d import Compound, Pos, Rot  # noqa: E402
 import concept as K  # noqa: E402
 from concept import Part, render_all, human_figure  # noqa: E402
 from model import (PARAMS as P, derived, build_components, posed, test_frame, rope_coil, toggle,  # noqa: E402
-                   rope_deployed, _fuse)
+                   rope_deployed, _fuse, prop, prop_in_use)
 
 D = derived(P)
 TURN = Rot(0, 0, 180)
@@ -32,12 +32,12 @@ PROJECT = "BreakHook"
 
 COLOR = {"plate": "#D9A400", "socket": "#C99A06", "welds": "#374151", "section": "#E07B24", "sleeve": "#9A3412",
          "pin": "#F3F4F6", "ring": "#1F2937", "band": "#DC2626", "cap": "#111827", "shackle": "#64748B",
-         "leader": "#475569", "rope": "#1D4ED8", "toggle": "#0F766E", "cord": "#7C3AED"}
+         "leader": "#475569", "rope": "#1D4ED8", "toggle": "#0F766E", "cord": "#7C3AED", "prop": "#0E7490"}
 NAME = {"plate": ("Hook plate", 1), "socket": ("Socket tube", 2), "welds": ("Socket welds", 3),
         "section": ("Pole sections (3)", 4), "sleeve": ("Joint sleeves (2)", 5), "pin": ("Joint pins (2)", 6),
         "ring": ("Friction ring", 8), "band": ("Hand band", 9), "cap": ("Butt cap", 10),
         "shackle": ("Shackles (2)", 11), "leader": ("Wire rope leader", 12), "rope": ("Pull rope", 13),
-        "toggle": ("Hauling toggles", 14), "cord": ("Prusik cords", 15)}
+        "toggle": ("Hauling toggles", 14), "cord": ("Prusik cords", 15), "prop": ("Fork prop", 26)}
 
 
 def kind(key):
@@ -62,6 +62,8 @@ def deployed():
     parts = set_parts(lambda s: TURN * posed(s))
     run, coil = rope_deployed(P)
     parts.append(Part("Pull rope", TURN * (run + coil), COLOR["rope"], 13))
+    U, _ = prop_in_use(P)
+    parts.append(Part(NAME["prop"][0], TURN * Compound(list(U.values())), COLOR["prop"], 26))
     butt_x = -5500.0
     context = [Part("Test dwelling frame (context)", TURN * test_frame(), "#C7CBD1"),
                human_figure(1750.0, x=-(butt_x + 250), y=-650.0, z=0.0)]
@@ -97,6 +99,9 @@ def exploded_parts():
         cords.append(Pos(x, 1250.0, -330.0) * (Rot(90, 0, 0) * __import__("build123d").Torus(70, 3)))
     parts.append(Part("Hauling toggles", TURN * _fuse(togs), COLOR["toggle"], 14))
     parts.append(Part("Prusik cords", TURN * _fuse(cords), COLOR["cord"], 15))
+    Q = prop(P, P["prop_holes"][2] - 1)                     # fork prop, closed, lying beside the toggles
+    lay = lambda s: Pos(-1700.0, 1650.0, -330.0) * (Rot(0, 90, 0) * (Rot(0, 0, 90) * s))  # noqa: E731
+    parts.append(Part(NAME["prop"][0], TURN * Compound([lay(v) for v in Q.values()]), COLOR["prop"], 26))
     return parts
 
 
@@ -145,12 +150,13 @@ FLOW = {"title": "pull force path at the working pull, kN (BHK-CAL-001 estimates
                    ("Hook plate", 2.95), ("Wall plate of the frame", 2.95)],
         "losses": [(1, "Lifts the rope (vertical share, 2 %)", 0.05)]}
 
-KEY = ["One set: steel hook head on a 5.9 m, three-section fibreglass pole",
+KEY = ["One set: steel hook head on a 5.9 m, three-section fibreglass pole and a fork prop",
        "Working pull 3 kN, proof 6 kN; about 10 haulers at 300 N each",
        "Haulers 10.8 m or more from the wall on a 26.5 m line (leader and rope)",
        "Pole and hook head 7.8 kg; insulated length 3.67 m below the head",
        "Pole withdrawn before the haul; never within 3 m of overhead lines",
-       "Kit of two sets and a wall rack: about USD 1,098 against a USD 2,000 target"]
+       "Fork prop at mid-length: hook droop about 0.27 m (0.66 m hand-held)",
+       "Kit of two sets and a wall rack: about USD 1,170 against a USD 2,000 target"]
 
 
 def main():
@@ -161,7 +167,7 @@ def main():
     parts, ctx = deployed()
     K._render(parts + ctx, ROOT / "media" / "hero.png", title=PROJECT,
               note="Seen from the front right and above, 24 deg elevation. Hook set over the wall plate of a "
-                   "test frame, butt on the ground. Grey: test frame and a 1.75 m person for scale")
+                   "test frame, butt on the ground, fork prop at mid-length. Grey: test frame and a 1.75 m person")
     K._render(exploded_parts(), ROOT / "media" / "exploded.png", offsets=True, labels=True, size=(10, 6.5),
               title=f"{PROJECT}: exploded view",
               note="Seen from the front right and above, 24 deg elevation; one set, pole sections laid side by "

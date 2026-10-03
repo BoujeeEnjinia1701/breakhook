@@ -1,9 +1,9 @@
-"""BreakHook general arrangement sheet BHK-DWG-001, Rev P1 (TRL 3, constructable design, BHK-DDR-002).
+"""BreakHook general arrangement sheet BHK-DWG-001, Rev P2 (TRL 3, constructable design, BHK-DDR-002 and 003).
 
 Run from the repo root:  python cad/src/sheets.py
 Writes cad/drawings/BHK-DWG-001.svg, .pdf and .png from cad/src/model.py with .kit/drawing.py:
 the assembled set in three views at 1:50 with its main lengths, detail A (hook head) and detail B
-(pole joint) at 1:5, and the main dimensions. The concept blueprint in media/ is BHK-DWG-010; the
+(pole joint) at 1:5, detail C (fork prop, closed) at 1:10, and the main dimensions. The concept blueprint in media/ is BHK-DWG-010; the
 making sketches BHK-DWG-101 onward come from cad/src/build_plan_media.py.
 """
 import shutil
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
 from build123d import Compound  # noqa: E402
 from drawing import Sheet, project_views, _viewbox, _t, M, TB_Y, INK, MUTED  # noqa: E402
-from model import PARAMS as P, derived, build_components, _tube_x, masses  # noqa: E402
+from model import PARAMS as P, derived, build_components, _tube_x, masses, prop, prop_mass, PROP_ORDER  # noqa: E402
 
 DATE = "2026-10-03"
 
@@ -64,11 +64,12 @@ def main():
     views = project_views(asm, work / "ga")
     bb = asm.bounding_box()
     s = Sheet(project="BreakHook", title="Firebreak hook and pole set: general arrangement", dwg_no="BHK-DWG-001",
-              rev="P1", author="Amish Chadha", date=DATE, scale=1 / 50, theme="technical",
+              rev="P2", author="Amish Chadha", date=DATE, scale=1 / 50, theme="technical",
               concept="PRELIMINARY, NOT FOR FABRICATION",
               material="Hook head S355 plate in 50.8 x 2.0 steel tube, primed and painted; pole foam-filled fibreglass "
                        "tube 44.5 x 3.2; see bom/bom.csv",
-              revisions=[("P1", "Preliminary GA of the constructable design (TRL 3; BHK-DDR-002)", DATE, "AC")])
+              revisions=[("P1", "Preliminary GA of the constructable design (TRL 3; BHK-DDR-002)", DATE, "AC"),
+                         ("P2", "Fork prop added, detail C (BHK-DDR-003)", DATE, "AC")])
     s.add_ortho(views)
     k = s.scale
     c, vb = cells(s, views)
@@ -112,6 +113,15 @@ def main():
     vbj = project_views(joint, work / "b")
     s.add_svg(vbj["front"], 276, 102, 140, 24, scale=0.2, label="Detail B: pole joint",
               sublabel="Scale 1:5; looking at the front (along +Y); sleeve bonded to the lower section")
+    # detail C: the fork prop, closed to its shortest setting and laid along X, 1:10
+    from build123d import Rot
+    kmin = P["prop_holes"][2] - 1
+    Q = prop(P, kmin)
+    pc = Compound([Rot(0, 90, 0) * (Rot(0, 0, 90) * Q[k]) for k in PROP_ORDER])
+    vc = project_views(pc, work / "c")
+    s.add_svg(vc["front"], 30, 182, 190, 22, scale=0.1, label="Detail C: fork prop (BOM 26 to 31)",
+              sublabel="Scale 1:10; closed to 1.24 m, foot left, fork right; carried separately, sets the "
+                       "pole at mid-length")
     m = masses(P)
     mset = sum(v for kk, v in m.items() if kk not in ("shackle 1", "leader"))
     s.add_notes("Main dimensions and interfaces (mm)", [
@@ -124,6 +134,7 @@ def main():
         "Leader 6 wire rope, 1500 eye to eye; pull rope 12 polyester, 25 m",
         f"Hand band {P['band'][0]:.0f} from the butt; insulated length {D['insulated']:.0f}",
         f"Pole and hook head {mset:.1f} kg; working pull 3 kN, proof 6 kN",
+        f"Fork prop {sum(prop_mass(P).values()):.1f} kg, notch 1.19 to 1.94 m; under the pole {D['prop_x'] - D['butt']:.0f} from the butt",
         "Third angle; pole along X, hook at +X; (n) = BOM line",
     ], x=276, y=145, width=146)
     out = s.save(ROOT / "cad" / "drawings" / "BHK-DWG-001")

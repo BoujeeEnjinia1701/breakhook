@@ -4,7 +4,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/breakhook/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/breakhook/actions/workflows/reuse.yml)
 
-**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design) · **Value-engineering target:** USD 2,000; estimated kit cost USD 1,098 · **Difficulty:** 2 of 5
+**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design) · **Value-engineering target:** USD 2,000; estimated kit cost USD 1,170 · **Difficulty:** 2 of 5
 
 Lets residents pull a shack down from a safe distance to open a firebreak before a fire jumps across.
 
@@ -59,7 +59,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 
 ![Concept: the hook set over the wall plate of a test frame, 1.75 m person for scale](media/hero.png)
 
-Key figures at TRL 3 (BHK-CAL-001): working pull 3 kN with every hook head proof-loaded to 6 kN; about ten haulers, the nearest 10.8 m from the wall; pole and hook head 7.82 kg; 3.67 m of insulated pole below the hook head; deployment in about 3 minutes from a store within 100 m. The fibreglass pole droops about 0.66 m when held out at 25°, so placement needs a team of two and is the main thing a TRL 4 trial must confirm.
+Key figures at TRL 3 (BHK-CAL-001): working pull 3 kN with every hook head proof-loaded to 6 kN; about ten haulers, the nearest 10.8 m from the wall; pole and hook head 7.82 kg; 3.67 m of insulated pole below the hook head; deployment in about 3 minutes from a store within 100 m. The fibreglass pole rests on a light fork prop at mid-length while the hook is set, which cuts the droop at the hook from about 0.66 m to 0.27 m; placement is the main thing a TRL 4 trial must confirm.
 
 ## Key components
 

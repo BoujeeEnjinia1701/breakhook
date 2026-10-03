@@ -108,3 +108,41 @@ Fifteen decisions, all in `docs/decisions/0001-trl2-review-decisions.md` and the
 ## 2026-10-03: photoreal renders
 
 Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.
+
+## 2026-10-03: Amish's requirement decisions carried out
+
+Amish chose option A on every requirement decision put to him: "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A". For BreakHook this is decision 6A (R1): add a light fork prop that supports the pole at mid-length, carried separately so the pole and hook head stay under 8 kg; recompute droop and reach. Not committed or pushed (batch run).
+
+### Changes
+
+- Fork prop added to `cad/src/model.py` (BHK-DDR-003): fibreglass lower tube 32 x 3 x 1,000 with foot cap and red hand band; fibreglass upper tube 25.4 x 3.2 x 1,100 sliding inside it, sixteen setting holes 50 apart; 12 mm HDPE fork plate with a 50 mm notch, held in a slot by two nylon M8 bolts; nylon setting pin. Fork notch 1.19 to 1.94 m above the ground; 1.24 m closed; 1.08 kg; no metal. New model checks: the prop's own parts at its longest and shortest settings, the fits (0.30 mm tube clearance, 0.25 mm each side of the fork tongue), the prop in use under the pole (fork 0.33 mm below the pole, foot on the ground, no overlaps with the set) and both props stowed on the rack's upper arms (no overlaps). STEP (`fork-prop.step`, `fork-prop-plate.step`) and STL (`fork-prop-plate.stl`) added; all STEP and STL regenerated.
+- `docs/04-calcs/sizing.py` and `01-sizing.md` v0.2: the pole as a beam on the rear hand and the prop [F13 to F22], an alternative prop position [F23, F24] and the insulated path to the prop holder [H3]; `results.csv` re-run.
+- `bom/bom.csv` lines 26 to 31 (two props, USD 72, each line with its price basis).
+- `docs/03-requirements.md` v0.3 (targets unchanged, Amish quoted, status of R1, R5, R8, R10, R14 updated); `docs/02-concept.md` v0.3; README key figures.
+- `docs/05-build-plan.md` v0.2: new row in Table 1, section 3.8 (fork prop) with Figures 14 to 16, Step 13 (assemble the prop), rack and stowing steps now 14 and 15, reach and prop first checks, S5 includes the prop.
+- Pictures: general arrangement BHK-DWG-001 Rev P2 (detail C, fork prop, and a note line); new making sketch BHK-DWG-107; overview, joints 9 and 10, steps 13 to 15 regenerated; concept media (hero with the prop in place, exploded with the prop, blueprint key figures, `model.glb`).
+- Register `docs/06-design-decisions.md` v0.2 and decision record `docs/decisions/0003-fork-prop.md` (BHK-DDR-003).
+- Appearance model `cad/src/product_model.py`: the prop under the pole in the hero view and closed beside the toggles in the exploded view; scenes re-exported to `/home/claude/renders/breakhook`.
+
+### New results
+
+- R1: hook set at 3.0 m with the pole on the prop: droop 274 mm (was 658 mm by hand); the prop carries 100 N and the rear hand pushes down 24 N (was 252 N lifted, 168 N pushed). Rear hand 5.06 m from the wall; the prop holder stands about 2.9 m from it, 1.1 m nearer than the 4 m front-hand distance. Placement met on paper; the prop holder's distance is a new open decision.
+- R5: 7.82 kg, unchanged (0.18 kg margin); the 1.08 kg prop is carried separately.
+- R8: met; the prop closes to 1.24 m.
+- R14: met; 3.67 m on the pole and 3.27 m of non-metal from the socket mouth to the prop holder's hand band.
+- R10: Value-engineering target: USD 2,000. Estimated cost of the constructable design: USD 1,170 (USD 830 under the target). `budget_usd` unchanged.
+- R6 estimate unchanged at 3.0 min (the prop is stored at the hole marked for the usual wall height and replaces the front-hand lift); still no margin.
+- Prop buckling: 822 N on the upper tube alone, 8 times the prop load.
+
+### For Amish
+
+- New open decision 1 in the register: the prop holder stands about 2.9 m from the wall for the 25 s of placement. Options: (a) accept it for placement only, with R1's 4 m applying to the pole hands and the prop holder withdrawing with the pole; (b) move the prop back to keep 4 m (droop 0.72 m, worse than by hand); (c) let the prop stand alone in the fork while its holder steps back (untested). Recommendation: (a), checked in the TRL 4 reach trial and drill.
+- The photoreal renders (`media/render-*.png`), card and social preview do not show the prop yet; re-render on the Mac from the re-exported scenes.
+
+### Safety
+
+- The prop is all fibreglass, HDPE and nylon. The 3 m overhead line rule, withdrawing the pole (and now the prop) before the haul, and leaving the fall zone are unchanged.
+
+## 2026-10-03: photoreal renders redone after Amish's requirement decisions
+
+Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.
