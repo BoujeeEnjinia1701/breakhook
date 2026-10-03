@@ -1,0 +1,26 @@
+item,qty,spec,supplier,unit_cost_usd,make_buy,notes
+1 Hook plate,2,"10 mm S355 steel plate, blank 500 x 200 mm, profile cut to BHK-DWG-101 (plasma, or drill and grinder), 13 mm shackle hole, edges dressed",Local steel stockist; cutting by a local welder or plasma service,14.00,make,"Indicative price for the blank; one per set, two sets per community kit (BHK-DDR-002)"
+2 Socket tube,2,"Welded steel tube 50.8 x 2.0 mm (2 in x 14 gauge), 180 mm long, two 10.5 x 50 mm slots across one end (BHK-DWG-102)",Local steel stockist,3.00,make,Indicative price; the pole slides into it with 1.15 mm radial clearance
+3 Hook head welding and finishing,2,"Fit plate into socket slots, four 6 mm fillet welds, zinc-rich primer and high-visibility yellow topcoat, stamp WLL 3 kN and serial number",Local welder (about 1 h per head),40.00,make,Indicative local labour rate; welder works from BHK-DWG-101 and 102
+4 Pole section,6,"Pultruded fibreglass round tube 44.5 x 3.2 mm (1.75 x 0.125 in), foam filled, electrical grade with a dielectric test certificate to ASTM F711 from the maker, UV-inhibited surface, cut to 1800 mm (BHK-DWG-103)",Fibreglass tube maker or live-line tool distributor,45.00,make,"Indicative price per 1.8 m section, three per set; electrical grade and foam fill per BHK-DDR-001"
+5 Joint sleeve,4,"Pultruded fibreglass round tube 50.8 x 3.2 mm (2 x 0.125 in), 300 mm long, bore sanded to a slip fit on item 4 (BHK-DWG-104)",Fibreglass tube maker,8.00,make,Indicative price; two per set; bonded 150 mm onto the lower section with item 7
+6 Joint pin,4,"Nylon 66 clevis pin 10 mm diameter, 70 mm grip, with nylon hitch clip and a cord lanyard",Industrial fastener distributor,3.00,buy,Indicative price; no metal in the insulated length
+7 Structural epoxy,1,"Two-part structural epoxy for composites, 50 ml cartridge, lap shear strength 15 MPa or more",Hardware or composites supplier,15.00,buy,Indicative price; bonds item 5 to item 4
+8 Friction ring tape,1,"Self-amalgamating rubber tape 25 mm x 10 m roll",Electrical distributor,8.00,buy,Indicative price; two or three turns on each pole tip; set to a 50 N push-off by trial
+9 Hand band,1,"Red vinyl tape 50 mm and clear heat-shrink sleeve 50 mm diameter, 0.5 m",Electrical distributor,6.00,buy,Indicative price; marks the top of the hand zone 1550 mm from the butt
+10 Butt cap,2,"Rubber end cap for 44.5 mm tube, 46 mm deep",Hardware supplier,3.00,buy,Indicative price
+11 Shackle,4,"3/8 in (10 mm) screw-pin bow shackle, galvanised, rated WLL 1 t, marked with grade and WLL",Rigging supplier,7.00,buy,Indicative price; two per set (hook eye and leader to rope)
+12 Wire rope leader,2,"6 mm 6x19 galvanised wire rope, breaking strength 20 kN or more, 1.5 m between eyes, thimble eye and pressed ferrule each end, proof tested and tagged by the rigging shop",Rigging shop,25.00,buy,Indicative price; keeps heat and sheet edges off the pull rope
+13 Pull rope,2,"12 mm polyester double braid, breaking strength 25 kN or more, 25 m, spliced eye at one end, whipped tail",Rope or marine supplier,70.00,buy,Indicative price
+14 Hauling toggle,20,"Fibreglass tube 32 x 3 mm, 300 mm long, 10 mm cross hole at mid length, ends rounded (BHK-DWG-105)",Fibreglass tube maker,3.00,make,"Indicative price; ten per set, cut from a 6 m length"
+15 Prusik cord,20,"6 mm polyester accessory cord, breaking strength 7 kN or more, 1.2 m, tied into a loop through item 14",Rope or outdoor supplier,2.00,buy,Indicative price; ten per set
+16 Rack upright,2,"40 x 6 mm steel flat bar: upright 800 mm, two arms 250 mm with 30 mm lips, rope peg 150 mm with 40 mm lip, welded, primed and painted (BHK-DWG-106)",Local welder,25.00,make,Indicative price including welding; one rack holds a community kit of two sets
+17 Wall anchor,4,"M10 sleeve anchor for masonry, or M10 coach screw for timber, with washer",Hardware supplier,2.00,buy,Indicative price; two per upright
+18 Paint,1,"Zinc-rich primer and high-visibility yellow enamel, 0.5 l each",Hardware supplier,25.00,buy,Indicative price; hook heads and rack
+19 Lock cable and padlock,1,"5 mm plastic-coated steel cable 2.5 m with looped ends and a padlock, keys held by two named keyholders",Hardware supplier,25.00,buy,Indicative price; through every section and both hook eyes on the rack
+20 Numbered seals,1,"Pull-tight numbered plastic security seals, pack of 100",Security or logistics supplier,15.00,buy,Indicative price; a broken seal shows the kit has been used or opened
+21 Fall zone tape,2,"Red and white barrier tape 75 mm x 100 m",Hardware or safety supplier,12.00,buy,Indicative price
+22 Fall zone stake,8,"Fibreglass marker stake 1.2 m with a pointed foot",Hardware or safety supplier,4.00,buy,Indicative price; four marks the corners of a fall zone
+23 Check card,6,"Printed A5 card, both sides, laminated, on a lanyard: empty-dwelling check, wire check, fall zone, signal words, stop rule",Local printer,3.00,buy,Indicative price; artwork released with the training material
+24 Rigger gloves,12,"Leather rigger gloves, pair",Safety supplier,5.00,buy,Indicative price; ten haulers and two on the pole
+25 Proof load and tag,2,"Each hook head with its leader and shackles loaded to 6 kN for 1 min and tagged, at a rigging shop or with the CalRig proof-load rig",Rigging shop or CalRig,30.00,buy,Indicative service price; done before the kit is issued

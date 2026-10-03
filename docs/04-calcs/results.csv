@@ -1,0 +1,51 @@
+ref,quantity,value,unit,note
+A1,Pull to overturn the dwelling as a rigid box,2.146,kN,"350 kg, 3.0 m base, pulled at 2.4 m"
+A2,Pull to rack an unbraced clad frame,3,kN,assumed 0.5 kN per metre of side wall for nailed light cladding
+A3,Design working pull (R2),3,kN,covers A1 and A2
+A4,Proof load (R2),6,kN,2 x working pull
+A5,Haulers needed at the working pull,10,people,assumed 300 N sustained per person on a rope with toggles
+A6,Haulers needed for the overturning case,8,people,
+B1,"Nearest hauler, horizontal distance from the wall",10.82,m,"first toggle 11 m along the line, hook at 3.0 m, hands at 1.0 m"
+B2,Required by R3 (1.5 x structure height),4.5,m,
+B3,Rope angle below horizontal at the first hauler,10.48,deg,
+B4,Horizontal share of the pull,98.33,%,
+B5,Last toggle along the line,20,m,toggles 1 m apart; line 26.5 m long
+B6,Tail left for anchoring or a turn round a post,6.5,m,
+C1,Arm rake back from square to the shank,16.65,deg,
+C2,"Arm root bending stress, 75 mm deep beam",97.88,MPa,"lever 58 mm; factor on yield 3.63 at proof, 7.25 at working"
+C3,"Arm root bending stress, 100 mm deep beam",153.2,MPa,"lever 90 mm; factor on yield 2.32 at proof, 4.63 at working"
+C4,Shank tension plus bending from the 0.5 mm line offset,18.06,MPa,factor on yield 19.7
+C5,Eye tear-out shear stress,12.77,MPa,two planes 23.5 mm long
+C6,Pin bearing stress on the plate,54.55,MPa,
+C7,Tab root bending stress,37,MPa,
+C8,Throat width at the shank (between tab and arm),150,mm,after the 8 mm corner radius
+C9,Throat width 100 mm below the shank,128.1,mm,
+C10,Arm reach below the shank (beam depth it can hold),117,mm,
+D1,Weld stress from a 200 N side load at the spike tip,4.593,MPa,"4 fillet welds, 6 mm leg, 50 mm long"
+D2,Rope load through the socket welds,0,kN,"the rope pulls the plate, not the socket"
+E1,Pull rope factor of safety at the working pull,7.5,,"12 mm polyester double braid, breaking strength 25 kN or more, spliced eye 90 %"
+E2,Leader factor of safety at the working pull,6,,"6 mm 6x19 galvanised wire rope, 20 kN, pressed ferrules 90 %"
+E3,Shackle working load limit against the working pull,3.267,,"3/8 in (10 mm) bow shackle, 1 t"
+E4,Load per prusik cord at the working pull,300,N,"6 mm cord, about 7 kN breaking"
+F1,Pole elevation when the hook is set at 3.0 m from 4.0 m away,25.41,deg,
+F2,Front hand from the butt,1269,mm,must be below the hand band
+F3,Hand band from the butt,1550,mm,
+F4,"Pole set weight (pole, head, leader, hanging rope)",84.14,N,
+F5,Rear hand pushes down with,168,N,hands 1.17 m apart
+F6,Front hand lifts,252.2,N,"two-person pole team: one lifts, one holds the butt down"
+F7,Pole bending stress at the front hand,50.59,MPa,factor 4.0 on 200 MPa
+F8,Droop of the hook at the reach point,657.9,mm,"aim this much high, then lower onto the beam"
+F9,Pole tube second moment of area,8.906,cm^4,
+F10,Pole and hook head mass (R5),7.821,kg,target 8 kg or less
+F11,Margin on R5,0.1792,kg,
+F12,Longest piece to carry (R8),1.95,m,a section with its bonded sleeve
+G1,Set force to pull the pole out of the hook head,50,N,friction ring wrapped until this is reached (set by trial); 4 x the hook head weight along the pole
+G2,Hook head weight along the pole at 25 deg,10.93,N,the ring must hold more than this
+G3,Ring contact pressure that gives G1,0.01788,MPa,friction 0.5 (assumed)
+G4,Joint pin double-shear capacity,6283,N,"nylon 66, 40 MPa in shear"
+G5,Pin capacity against the pull-out force,125.7,,pins never carry the rope pull
+G6,Bonded sleeve capacity,104.9,kN,"150 mm overlap, 5 MPa allowable epoxy shear"
+H1,"Insulated length, socket mouth to hand band",3674,mm,no metal in this length; pins are nylon
+H2,Required by R14,3000,mm,
+I1,"Store to hook set, pole team of two (R6)",3,min,the other two lay out the rope and run the check card in parallel
+I2,Hook set to frame down (R7),1.167,min,estimate; set by a timed trial at TRL 4

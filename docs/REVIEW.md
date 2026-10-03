@@ -1,0 +1,110 @@
+# Review note: BreakHook
+
+## Session 2026-09-30: scaffolded
+
+### What was done
+
+- Repository created from kit 1.6.0 at TRL 1, target TRL 2.
+- `docs/01-problem.md` (BHK-PRB-001 v0.1): problem with cited evidence, users, environment, constraints, prior work, open questions.
+- `docs/02-concept.md` (BHK-PRC-001 v0.1): how it works, components, patent design-arounds, shared blocks, safety.
+- `docs/03-requirements.md` (BHK-REQ-001 v0.1): 10 proposed requirements.
+- `README.md` with concept rationale, burning platform, where it could be used, and what sparked the idea.
+
+### Next
+
+- Run `/populate` to bring the repo to a strong TRL 2 with concept media.
+
+## Session 2026-10-03: TRL 2 (/populate), run as part of /to-trl3 on kit 1.7.0
+
+Amish Chadha, 2026-10-03: "start with the first 14 repos from the list of 29 projects. I pre-approve the batch runs along with any recommendations you come up with. I also accept any cost overruns or variations from the assumed scope cost." On that basis every recommendation in this note is recorded as decided, not proposed.
+
+### What was done
+
+- Kit 1.7.0 installed (`.kit/`, `.claude/commands/`, root `CLAUDE.md` replaced by `.kit/CLAUDE.md`; `.kit/PHASE.yaml` as installed).
+- Problem statement BHK-PRB-001 v0.2: co-design candidate named, the five TRL 1 questions answered, safety section.
+- Requirements BHK-REQ-001 v0.2: R1 to R10 made measurable, R11 to R14 added (beam size, pole release, effort per hauler, insulated length).
+- Precis BHK-PRC-001 v0.2: how it works in six steps, components, choices, numbers, safety.
+- Massing model and concept media. The TRL 2 massing model was replaced in the same session by the constructable model, so every file in `media/` comes from `cad/src/model.py` (see the TRL 3 section).
+- BOM with 25 priced lines (`bom/bom.csv`).
+
+### Results at TRL 2
+
+- The pull needed to bring down the target dwelling is 2.15 to 3.0 kN, so the working pull of 3 kN in R2 stands, but it needs about ten haulers, not four. R6's four people deploy the kit; the hauling crew comes from residents present.
+
+### Decisions made under the pre-approval (BHK-DDR-001)
+
+Fifteen decisions, all in `docs/decisions/0001-trl2-review-decisions.md` and the register `docs/06-design-decisions.md`: foam-filled, certified fibreglass pole; pole withdrawn before the haul; plate hook in a welded socket, WLL 3 kN, proof 6 kN; wire rope leader, rated shackles and polyester pull rope; ten haulers on toggles and no pulley; haulers at 1.5 x height and never closer than 10 m; never within 3 m of overhead lines; hand band and 3.0 m insulated length; locked, sealed rack with two keyholders and a use log; firebreak two dwellings ahead; free-standing and end units only; monthly checks; first co-design candidate (City of Cape Town Fire and Rescue Service reservists, then Kenya Red Cross Society, neither agreed); requirement updates; `budget_usd` unchanged.
+
+### Safety concerns
+
+- Structure collapse, occupied dwellings, electrical wiring, rope system failure, heat and crowds. Each safety-related decision took the conservative option and states what evidence would relax it.
+
+## Session 2026-10-03: TRL 3 (/advance-trl3 and /build-plan)
+
+### What was done
+
+- Calculation note BHK-CAL-001 v0.1 (`docs/04-calcs/01-sizing.md`), script `docs/04-calcs/sizing.py`, results `docs/04-calcs/results.csv`.
+- Parametric build123d model `cad/src/model.py` with `--check` (overlaps, fits, masses); STEP in `cad/step/` (assembly, hook head, hook plate, socket, pole section, sleeve, toggle, rack upright) and STL in `cad/stl/` (hook head, toggle).
+- General arrangement BHK-DWG-001 Rev P1 (`cad/src/sheets.py`): set at 1:50 with section lengths, detail A (hook head) and detail B (pole joint) at 1:5.
+- Concept media regenerated from the model (`cad/src/concept_media.py`): hero (hook over a test frame, 1.75 m figure), exploded, flow (force path), concept blueprint BHK-DWG-010, model.glb and viewer.html (meshed at 1 mm and 0.35 rad, colours kept).
+- Design made constructable (decision record BHK-DDR-002); `design_state: constructable`.
+- Build plan BHK-BLD-001 (`docs/05-build-plan.md`) with pictures from `cad/src/build_plan_media.py`: overview, six making sketches (BHK-DWG-101 to 106), eight joint close-ups and fourteen step pictures.
+- Design decisions register BHK-DEC-001 (`docs/06-design-decisions.md`).
+- Appearance model `cad/src/product_model.py` (hero, exploded and detail views; mannequin for scale) and render scenes exported to `/home/claude/renders/breakhook` for photoreal rendering on Amish's Mac.
+- `project.yaml` at trl 3, trl_target 3, with trl_evidence; README leads with `media/render-hero.png` (made on the Mac), adds the links line, key figures and "Building the prototype".
+
+### Key results (BHK-CAL-001)
+
+- Working pull 3 kN; proof 6 kN. Least factor on yield in the hook plate at proof 2.3 (100 mm beam); rope 7.5, leader 6.0, shackle 3.3 at the working pull.
+- Ten haulers at 300 N; nearest 10.8 m from the wall (R3 needs 4.5 m).
+- Pole and hook head 7.82 kg (R5: 8 kg). Pole team of two: 252 N lift, 168 N hold-down.
+- Insulated length 3.67 m (R14: 3.0 m).
+- Deployment 3.0 min within 100 m of the store (R6: 3 min); pull 1.2 min (R7, estimate).
+- Value-engineering target: USD 2,000. Estimated cost of the constructable design: USD 1,098 (USD 902 under the target).
+
+### Requirements not met or at risk
+
+- **R1 at risk:** the hook droops about 0.66 m when the pole is held out at 25° (E = 20 GPa assumed). Placement is possible by aiming high, but this is the first thing to measure at TRL 4. A stiffer 50.8 mm tube would break R5.
+- **R6 and R13 met with no margin:** 3.0 min and 300 N per hauler exactly.
+- **R4 met by specification only:** depends on the bought tube's ASTM F711 certificate.
+- **R7 and R9:** cannot be shown on paper; estimate and material choices only.
+- **R5:** 0.18 kg margin.
+
+### Decisions made under the pre-approval
+
+- BHK-DDR-001 (fifteen TRL 2 review decisions, above) and BHK-DDR-002 (design for construction). Both recorded as decided by Amish on 2026-10-03 with his quote. Open decisions: none.
+
+### Design changes made for construction (BHK-DDR-002), 2026-10-03
+
+- Hook head cut from one 10 mm S355 plate (no forging), welded into two 10.5 x 50 slots in a 50.8 x 2.0 steel socket.
+- Pole in socket: 1.15 mm radial clearance, 130 mm deep, rubber tape friction ring for a 50 N release.
+- Pole joints: external fibreglass sleeve bonded 150 mm to the lower section, nylon 10 mm pin 75 mm above the joint.
+- Rope attachment: 13 mm hole in a rope tab in line with the arm, rated bow shackle, 1.5 m wire rope leader, second shackle to the rope's spliced eye.
+- Plate re-proportioned: 36 mm shank and 48 mm arm, S355 instead of S275 (the arm was at 1.24 on yield at proof).
+- Toggles on prusik cord loops; rubber butt cap; sealed ends; red hand band.
+- Rack: two welded 40 x 6 flat-bar uprights with lipped arms (poles 56 apart, sleeves at alternate ends) and a 380 mm rope peg so the coil clears the arms.
+
+### Build plan findings
+
+- No overlaps over 1 mm³ between any parts of a set, or of the kit on its rack, after the changes.
+- Nominal tube sizes give zero clearance for the sleeve; the bore must be sanded. Listed under "To confirm when parts are bought" with seven other items.
+- The pole cannot carry the pull and should not: the slip fit makes that physically impossible, which also keeps the pole team out of the load path.
+
+### Appearance model and render scenes
+
+- `cad/src/product_model.py`: TITLE "BreakHook: firebreak hook, pole and pull rope set"; views hero (set over the test frame with the mannequin), exploded (one set, sections side by side, coil and toggles) and detail (hook head on the wall plate, cut to a window). Every dimension comes from `model.py`. Differences from `model.py`: none in dimensions; the scene is turned 180° about Z for the camera, the detail view clips the parts to a window, and the pull rope's run on the ground is drawn as two straight lengths.
+- Photoreal renders and the cards are made on Amish's Mac; `media/render-hero.png`, `media/card.png` and `media/social-preview.png` do not exist yet, so `render.py --check` warns about them and the image check.
+
+### Safety concerns
+
+- Falling structure, occupied dwelling, overhead and informal wiring, rope system failure under load, heat and smoke, crowds, and misuse in disputes. Each is answered by a conservative decision (BHK-DDR-001) and by the safety stops S1 to S5 in the build plan. The insulated pole is a second line of defence only.
+- The proof load (6 kN) is the first time the rope system is loaded; safety stop S2 keeps everyone out of line with it.
+
+### Recommended next step
+
+- Photoreal renders and cards on Amish's Mac from `/home/claude/renders/breakhook`.
+- TRL 4 (recommendation only, not started): build one set and the rack, proof-load it, then a reach trial (R1 droop) and a timed drill on a purpose-built test frame with the first co-design candidate.
+
+## 2026-10-03: photoreal renders
+
+Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use or build on this design, please cite it as below."
+type: software
+title: "BreakHook"
+abstract: "Lets residents pull a shack down from a safe distance to open a firebreak before a fire jumps across."
+authors:
+  - given-names: Amish
+    family-names: Chadha
+    affiliation: Design Molecule
+    orcid: "https://orcid.org/0009-0000-8079-7141"
+repository-code: "https://github.com/BoujeeEnjinia1701/breakhook"
+url: "https://designmolecule.com"
+license: CERN-OHL-S-2.0
+keywords:
+  - open-hardware
+  - informal-settlements
+  - fire-safety
+  - community-response
+  - hand-powered
+  - situational-field-hardware
