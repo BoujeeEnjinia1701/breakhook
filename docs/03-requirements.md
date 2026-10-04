@@ -3,7 +3,7 @@ doc_id: BHK-REQ-001
 title: BreakHook requirements
 project: BreakHook
 doc_type: Requirements
-version: "0.3"
+version: "0.5"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -21,11 +21,15 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: 'Fork prop at mid-length added under Amish''s decision 6A (BHK-DDR-003); status of R1, R5, R8, R10 and R14 updated from BHK-CAL-001 v0.2; targets unchanged'
+- version: "0.5"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "R1 stand-off wording restated after Amish's round-2 decision 5A (BHK-DDR-004): prop holder at 2.9 m during placement only; confirmed in the TRL 4 reach trial"
 ---
 
 # BreakHook requirements
 
-Fourteen requirements, each with a measurable target. At TRL 3 they are checked by calculation (BHK-CAL-001); verification by test is TRL 4 work. Ten are met on paper; R1's hook placement is met with the fork prop, but the prop holder stands nearer the wall than R1's 4 m; R6 and R13 are met with no margin, and R7 and R9 can only be shown by trial.
+Fourteen requirements, each with a measurable target. At TRL 3 they are checked by calculation (BHK-CAL-001); verification by test is TRL 4 work. Ten are met on paper; R1's hook placement is met with the fork prop, and the prop holder's 2.9 m placement-only stand-off is accepted by Amish (the TRL 4 reach trial confirms it); R6 and R13 are met with no margin, and R7 and R9 can only be shown by trial.
 
 On 2026-10-03 Amish chose option A on every requirement decision put to him ("1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A"). For BreakHook, decision 6A adds a light fork prop that supports the pole at mid-length, carried separately so the pole and hook head stay under 8 kg (BHK-DDR-003). No target changes.
 
@@ -35,7 +39,7 @@ Table 1. Requirements
 
 | ID | Requirement | Target | Verification (TRL 4 or later) | Status at TRL 3 |
 | --- | --- | --- | --- | --- |
-| R1 | Reach of the hook | Places the hook at a height of 3 m (10 ft) with the front hand 4 m (13 ft) from the wall | Reach trial on the test frame | Hook placement met on paper with the fork prop at mid-length: droop about 0.27 m (0.66 m by hand), rear hand 5.06 m from the wall (CAL [F13] to [F20]); the prop holder stands about 2.9 m from the wall, 1.1 m nearer than the front-hand distance (see the design decisions register) |
+| R1 | Reach of the hook | Places the hook at a height of 3 m (10 ft) with the pole hands (front hand) 4 m (13 ft) from the wall; the prop holder may stand 2.9 m from the wall during placement only (about 25 s) and withdraws with the pole before the haul | Reach trial on the test frame, with the prop holder's distance from the wall and the time at 2.9 m measured | Hook placement met on paper with the fork prop at mid-length: droop about 0.27 m (0.66 m by hand), rear hand 5.06 m from the wall (CAL [F13] to [F20]); the prop holder stands about 2.9 m from the wall for the placement only (about 25 s), accepted by Amish (5A, round 2), and withdraws with the pole; the TRL 4 reach trial confirms it |
 | R2 | Hook and rope working pull | 3 kN (675 lbf) working, every hook head proof-loaded to 6 kN (1,350 lbf) before issue | Proof load with CalRig or at a rigging shop | Met: least factor 2.3 on yield at proof (CAL [C3]) |
 | R3 | Hauling distance | Nearest hauler at least 1.5 times the structure height from the wall, and never closer than 10 m | Field layout check | Met: 10.8 m (CAL [B1]) |
 | R4 | Pole electrical insulation | The handled length is foam-filled fibreglass carrying the maker's dielectric test certificate to ASTM F711 for live-line tool tube | Certificate check on receipt; no field electrical test | Met by specification; confirm the certificate when bought |
@@ -52,7 +56,7 @@ Table 1. Requirements
 
 ## Requirements at risk
 
-- **R1:** the fibreglass tube is flexible. The fork prop at mid-length cuts the droop from about 0.66 m to 0.27 m and takes the lift off the pole team, but its holder stands about 2.9 m from the wall while the hook is set. Whether that distance is acceptable is an open decision in the design decisions register; the measured droop is an item to confirm.
+- **R1:** the fibreglass tube is flexible. The fork prop at mid-length cuts the droop from about 0.66 m to 0.27 m and takes the lift off the pole team, but its holder stands about 2.9 m from the wall while the hook is set, for about 25 s. Amish accepted that for placement only (round 2, 5A: "i agree with all the 46 recommendations you provided. please proceed.") and R1 is restated accordingly: the 4 m applies to the pole hands, and the holder withdraws with the pole before the haul. The reach trial at TRL 4 confirms the distance and the time; the measured droop is an item to confirm.
 - **R6 and R13:** both sit exactly on their targets, so a slower carry or a weaker crew misses them. The community fire plan sets the store within 100 m and calls for ten haulers.
 - **R5:** 0.18 kg of margin; heavier paint or a thicker tube wall would use it up.
 

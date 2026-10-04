@@ -3,7 +3,7 @@ doc_id: BHK-BLD-001
 title: BreakHook prototype build plan
 project: BreakHook
 doc_type: Build plan
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: Fork prop added (BHK-DDR-003); new section 3.8, Figures 14 to 16, Step 13; rack and stowing steps renumbered 14 and 15
+- version: "0.3"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "Reach and drill checks worded for the prop holder's placement-only stand-off at 2.9 m (BHK-DDR-004, Amish's round-2 decision 5A)"
 ---
 
 # BreakHook prototype build plan
@@ -353,10 +357,10 @@ These are the checks a TRL 4 test report would record; this plan only lists them
 | Release | R12 | Spring balance on the pole while the hook head is held | Releases at about 50 N |
 | Insulated length and certificate | R4, R14 | Measure from the socket mouth to the top of the band; read the tube certificate | 3.0 m or more; certificate to ASTM F711 present |
 | Beam fit | R11 | Hang the hook on 75 x 50 and 100 x 120 timber offcuts | Shank rests on top, arm behind, no forcing |
-| Reach | R1 | Pole team sets the hook on a 3 m high timber rail, the pole on the fork prop at mid-length and the rear hand at the butt | Hook set in three tries or fewer; droop measured (about 0.27 m expected); distance of each person from the rail measured |
+| Reach | R1 | Pole team sets the hook on a 3 m high timber rail, the pole on the fork prop at mid-length and the rear hand at the butt | Hook set in three tries or fewer; droop measured (about 0.27 m expected); distance of each person from the rail measured: pole hands 4 m, prop holder about 2.9 m for about 25 s; confirms the stand-off accepted in BHK-DDR-004 |
 | Prop | R1, R8 | Set the prop at each marked hole under the pole; close it | Pin goes through at every hole; the prop stands steady at its lean; closed length 1.3 m or less |
 | Toggle grip | R13 | 30 kg hung on a toggle on the rope | No slip |
-| Deployment drill | R6 | Four people, kit 100 m from the rail, stopwatch | Hook set and pole withdrawn in 3 min or less |
+| Deployment drill | R6 | Four people, kit 100 m from the rail, stopwatch | Hook set and pole withdrawn in 3 min or less; the prop holder withdraws with the pole, so nobody stands nearer than the 4 m pole-hand distance at the haul |
 
 ## 6. Safety stops
 

@@ -146,3 +146,34 @@ Amish chose option A on every requirement decision put to him: "1A 2A 3A 4A 5A 6
 ## 2026-10-03: photoreal renders redone after Amish's requirement decisions
 
 Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.
+
+## 2026-10-03: Amish's round-2 requirement decisions carried out
+
+Amish, 2026-10-03: "i agree with all the 46 recommendations you provided. please proceed." For BreakHook this is decision 5A on the prop holder's distance, recorded in `docs/decisions/0004-prop-holder-distance.md` (BHK-DDR-004) and in the register `docs/06-design-decisions.md` (BHK-DEC-001 v0.3). A records and wording change only: no geometry, bill of materials, drawing or picture changed.
+
+| Change | Files | New result |
+| --- | --- | --- |
+| Prop holder accepted at 2.9 m for placement only (about 25 s); holder withdraws with the pole | BHK-DDR-004, register v0.3 | Droop about 0.27 m, rear hand 5.06 m, holder 2.9 m, as before |
+| R1 stand-off wording restated: 4 m applies to the pole hands | `docs/03-requirements.md` v0.4 | **R1 met on paper as restated**; the reach trial at TRL 4 confirms the distance, the time at 2.9 m and the withdrawal |
+| Reach and drill checks worded for the stand-off | `docs/05-build-plan.md` (checks table) | Distances measured for each person |
+| Open decision 1 closed | register v0.3 | Open decisions: none |
+| Cost | unchanged | Value-engineering target: USD 2,000. Estimated cost of the constructable design: USD 1,170 (USD 830 under the target). `budget_usd` unchanged |
+
+Mass unchanged (pole and hook 7.82 kg; prop 1.08 kg carried separately). Pictures changed: none; the appearance model is unchanged and no views were re-exported.
+
+### Decisions proposed, awaiting Amish
+
+None.
+
+### Cross-repo actions
+
+None.
+
+### Safety
+
+The prop holder is the person nearest the wall, at 2.9 m, and only while the hook is set on a dwelling that is not yet burning. The holder withdraws with the pole before the haul. The haulers' 10 m and 1.5 times height rule and the 3 m overhead line rule are unchanged.
+
+### Recommended next step
+
+TRL 4 (the reach trial on the test frame with the distances and the 25 s timed, then the drill) needs a new instruction from Amish.
+

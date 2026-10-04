@@ -3,7 +3,7 @@ doc_id: BHK-DEC-001
 title: BreakHook design decisions register
 project: BreakHook
 doc_type: Design decisions register
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: Fork prop at mid-length decided by Amish (6A, BHK-DDR-003); new open decision on the prop holder's distance from the wall; value engineering re-costed
+- version: "0.3"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "Open decision 1 (prop holder distance) decided, round 2, 5A (BHK-DDR-004); no open decisions"
 ---
 
 # BreakHook design decisions register
@@ -27,9 +31,7 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-| # | To be decided | State | Options | Recommendation | Affects in the build | Source |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | Where the prop holder stands while the hook is set | The fork prop works only near the pole's mid-length; there its holder stands about 2.9 m from the wall for the 25 s of placement, 1.1 m nearer than R1's 4 m front-hand distance. The rear handler is 5.06 m away. | (a) Accept 2.9 m for placement only, restating R1's distance as applying to the pole hands, with the prop holder withdrawing with the pole before the haul; (b) keep 4 m for everyone and move the prop back (droop 0.72 m, no better than by hand); (c) keep 4 m and set the prop, then let it stand alone in the fork while its holder steps back (untested) | (a), checked in the TRL 4 reach trial and drill: the firebreak is opened two dwellings ahead of the fire (BHK-DDR-001, decision 10), so the dwelling being hooked is not yet burning, and the prop only helps at mid-length | None to the parts; the check card and drill wording | [BHK-DDR-003](decisions/0003-fork-prop.md); BHK-CAL-001 [F19], [F24] |
+None. Open decision 1 (where the prop holder stands while the hook is set) was decided by Amish on 2026-10-03: 2.9 m for placement only; see Decisions made and BHK-DDR-004.
 
 ## To confirm when parts are bought
 
@@ -75,3 +77,4 @@ Value-engineering target: USD 2,000 (a hypothetical control target, not a limit)
 | 2026-10-03 | `budget_usd` stays at USD 2,000 as the value-engineering target | Amish Chadha: "I also accept any cost overruns or variations from the assumed scope cost." | BHK-DDR-001, decision 15 |
 | 2026-10-03 | Design for construction: plate hook in slotted socket, slip-fit pole with friction ring, bonded sleeves and nylon pins, rope tab with shackle and leader, S355 plate with 36 mm shank and 48 mm arm, prusik toggles, welded wall rack | Amish Chadha, pre-approval as above | [BHK-DDR-002](decisions/0002-design-for-construction.md) |
 | 2026-10-03 | R1: add a light fork prop that supports the pole at mid-length, carried separately so the pole and hook head stay under 8 kg (decision 6A) | Amish Chadha: "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A" | [BHK-DDR-003](decisions/0003-fork-prop.md) |
+| 2026-10-03 | 5A (round 2): prop holder accepted at 2.9 m from the wall during placement only (about 25 s); the holder withdraws with the pole; R1's stand-off wording restated (4 m for the pole hands); confirmed in the TRL 4 reach trial. No design change | Amish: "i agree with all the 46 recommendations you provided. please proceed." | BHK-DDR-004 |
